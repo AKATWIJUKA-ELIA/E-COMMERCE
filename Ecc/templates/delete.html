@@ -1,0 +1,123 @@
+{% comment %} <div class="col-lg-8 mx-auto col-12">
+
+      <h1 class="hero-title text-center mb-5">REMOVE PRODUCTS</h1>
+
+    
+
+      <div class="row">
+          <div class="col-lg-8 col-11 mx-auto">
+              <form role="form" method="post" action='{% url 'delete' %}' enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-floating" style='margin-bottom:10px'>
+                          <input type="text" name="product_id" id="product_id"  class="form-control" placeholder="product_id" required>
+
+                          <label for="product_id">product_id</label>
+                    </div>
+
+                  
+                  <button type="submit" class="btn custom-btn form-control mt-4 mb-3">
+                      Remove product
+                  </button>
+
+                 
+
+              </form>
+          </div>
+      </div>
+
+      
+      
+  </div>
+
+</div> {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Orders</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Last Orders</h2>
+        <p>Quick management of the last 10 orders</p>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Receiver</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12312</td>
+                        <td>$2,320</td>
+                        <td>PayPal</td>
+                        <td>Approved</td>
+                        <td>John Doe</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12313</td>
+                        <td>$1,500</td>
+                        <td>Pay on Delivery</td>
+                        <td>Waiting</td>
+                        <td>Teresa Clark</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12314</td>
+                        <td>$338</td>
+                        <td>Sofort</td>
+                        <td>Canceled</td>
+                        <td>Elijah Smith</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12315</td>
+                        <td>$1,125</td>
+                        <td>Pay on Delivery</td>
+                        <td>Completed</td>
+                        <td>Mark Thomas</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12312</td>
+                        <td>$2,320</td>
+                        <td>PayPal</td>
+                        <td>Approved</td>
+                        <td>John Doe</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

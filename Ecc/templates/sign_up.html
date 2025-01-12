@@ -1,0 +1,168 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+
+      {% comment %} NEW HEAD {% endcomment %}
+      <meta charset="utf-8">
+      <title>Sign_up | amazima</title>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <meta content="" name="keywords">
+      <meta content="" name="description">
+
+      <!-- Favicon -->
+      <link href="{% static 'images/logo.png' %}" rel="icon">
+
+      <!-- Google Web Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+      
+      <!-- Icon Font Stylesheet -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+      <!-- Libraries Stylesheet -->
+      <link href=" {% static 'lib-sign/animate/animate.min.css' %}" rel="stylesheet">
+      <link href="{% static 'lib-sign/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+      <!-- Customized Bootstrap Stylesheet -->
+      <link href="{% static 'css-new/bootstrap.min.css' %}" rel="stylesheet">
+
+      <!-- Template Stylesheet -->
+      <link href="{% static 'css-new/style.css'%}" rel="stylesheet">
+      {% comment %} END NEW HEAD  {% endcomment %}
+
+      
+      <meta charset="utf-8">
+      <title>Sign Up</title>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <meta content="" name="keywords">
+      <meta content="" name="description">
+      <!-- CSS FILES -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+      <link href="{% static 'css-sign/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css-sign/bootstrap-icons.css'%}" rel="stylesheet">
+
+      <link rel="stylesheet" href="{% static 'css-sign/slick.css' %}"/>
+
+      <link href="{% static 'css-sign/tooplate-little-fashion.css' %} " rel="stylesheet">
+
+    </head>
+    
+    <body>
+      
+      {% include "navv.html" %}
+      {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{message.tags }} alert-dismissible fade show" role ="alert" style= "text-align : center;background-color: aqua;">
+          <strong>
+            Message:
+          </strong> {{ message }}
+          <button type ="button" class="close" data-dismiss="alert" aria-label="close">
+          <span  aria-hidden="true"> &times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
+        <section class="preloader">
+            <div class="spinner">
+                <span class="sk-inner-circle"></span>
+            </div>
+        </section>
+    
+        <main>
+
+            <section class="sign-in-form section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-8 mx-auto col-12">
+
+                            <h1 class="hero-title text-center mb-5">Sign Up</h1>
+
+                            <div class="social-login d-flex flex-column w-50 m-auto">
+                                
+                                <a href="#" class="btn custom-btn social-btn mb-4">
+                                    <i class="bi bi-google me-3"></i>
+
+                                    Continue with Google
+                                </a>
+                            </div>
+
+                            <div class="div-separator w-50 m-auto my-5"><span>or</span></div>
+
+                            <div class="row">
+                                <div class="col-lg-8 col-11 mx-auto">
+                                    <form role="form" method="post">
+                                          {% csrf_token %}
+
+                                          <div class="form-floating" style='margin-bottom:10px'>
+                                                <input type="text" name="username" id="username" maxlength=8  class="form-control" placeholder="username" required>
+    
+                                                <label for="username">username</label>
+                                          </div>
+
+                                          <div class="form-floating" style='margin-bottom:10px'>
+                                                <input type="tel" name="phone" id="phone"  class="form-control" placeholder="phone" required>
+    
+                                                <label for="phone">phone</label>
+                                            </div>
+
+                                        <div class="form-floating">
+
+                                            <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required>
+
+                                            <label for="email">Email address</label>
+                                        </div>
+                                        
+
+                                        <div class="form-floating my-4">
+                                            <input type="password" name="password" id="password"  class="form-control" placeholder="Password" required>
+
+                                            <label for="password">Password</label>
+                                            
+                                            {% comment %} <p class="text-center">* shall include 0-9 a-z A-Z in 4 to 10 characters</p> {% endcomment %}
+                                        </div>
+
+                                        <div class="form-floating">
+                                            <input type="password" name="password2" id="password2"  class="form-control" placeholder="Password" required>
+
+                                            <label for="password2">Password Confirmation</label>
+                                        </div>
+
+                                        <button type="submit" class="btn custom-btn form-control mt-4 mb-3">
+                                            Create account
+                                        </button>
+
+                                        <p class="text-center">Already have an account? Please <a href="{% url 'sign_in' %}">Sign In</a></p>
+
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="{% static "js-sign/jquery.min.js" %} "></script>
+        <script src="{% static "js-sign/bootstrap.bundle.min.js" %} "></script>
+        <script src="{% static "js-sign/Headroom.js" %} "></script>
+        <script src="{% static "js-sign/jQuery.headroom.js" %} "></script>
+        <script src="{% static "js-sign/slick.min.js" %} "></script>
+        <script src="{% static "js-sign/custom.js" %} "></script>
+
+    </body>
+</html>

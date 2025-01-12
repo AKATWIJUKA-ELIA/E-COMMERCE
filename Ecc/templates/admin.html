@@ -1,0 +1,570 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'admincss.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body>
+      <div class="container-fluid bg-dark px-0">
+            <div class="row gx-0 ">
+      
+                
+
+                <div class="col-lg-9 offset-2">
+                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
+                        <div style="margin-top: 0%;" class="col-2">
+                              <img src="{% static 'images/logo.png' %}" alt="Golden view hotel logo"
+                                  height="100px" width="100px"
+                                  style="border-radius: 20px;">
+              
+                        </div>
+  
+                        <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
+                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class=" m-0 text-primary text-uppercase">Amazima Restaurant <br> </h1>
+                              </a>
+                        </div>
+
+                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                              <h1 
+                              style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase ">Amazima Restaurant</h1>
+                        </a>
+                        
+                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
+                          <div class="navbar-nav mr-auto py-0">
+                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
+                            <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
+                            <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
+                            <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
+                            {% comment %} <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link pointer text-truncate" >Hi-{{ username }}</a> {% endcomment %}
+                            {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
+                          </div>
+                          <ul class="navbar-nav gap-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a href="{% url 'cart' %}" class="btn btn-sm btn-light rounded py-2 px-2">Cart({{ items_on_cart }})</a>
+                            </li>
+                            
+                          </ul>
+                        </div>
+                      </nav>
+                </div>
+            </div>
+        </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      
+        <h3 class="text-light mb-4">Management</h3>
+        <nav class="nav flex-column">
+            <a href="{% url 'admin' %}" class="nav-link active"><i class="fas fa-home me-2"></i> Dashboard</a>
+            <a href="{% url 'admin_profile' %}" class="nav-link"><i class="fas fa-user me-2"></i> Profile</a>
+            <a href="#order" id="orders_click" class="nav-link"><i class="fas fa-shopping-cart me-2"></i> Order</a>
+            <a href="#AddProductModal" data-bs-toggle="modal" class="nav-link"><i class="fas fa-box me-2"></i> add Product</a>
+            <a href="#AddGalleryModal" data-bs-toggle="modal" class="nav-link"><i class="fas fa-box me-2"></i> add Gallery</a>
+            <a href="#" class="nav-link"><i class="fas fa-box me-2"></i> Customers</a>
+            <a href="#" class="nav-link"><i class="fa-solid fa-comment"></i> FeedBack</a>
+            <a href="{% url 'log_out' %}" class="nav-link"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <input type="text" class="form-control bg-dark text-white" placeholder="Search here...">
+            <div>
+                <button class="btn btn-danger"><i class="fas fa-bell"></i></button>
+                <button class="btn btn-danger"><i class="fas fa-bell"></i></button>
+                <button class="btn btn-danger"><i class="fas fa-bell"></i></button>
+                <button class="btn btn-danger"><i class="fas fa-bell"></i></button>
+                <button class="btn btn-danger"><i class="fas fa-bell"></i></button>
+                <img src="https://via.placeholder.com/40" class="rounded-circle" alt="User">
+            </div>
+        </div>
+
+        <!-- Sales Summary -->
+        <div class="row mb-4">
+            <div class="col-md-3" href="products-table" style="cursor:pointer">
+                <div class="card p-3">
+                    <h5>Total Products</h5>
+                    <div class="stat-value">{{ available_products }}</div>
+                    {% comment %} <div class="stat-change">+10% from yesterday</div> {% endcomment %}
+                </div>
+            </div>
+
+            <div class="col-md-3" style="cursor:pointer">
+                <div id="" class="card p-3">
+                    <h5>Total Orders</h5>
+                    <div class="stat-value">{{ total_orders }}</div>
+                </div>
+            </div>
+            {% comment %} <div class="col-md-3" style="cursor:pointer">
+                <div class="card p-3">
+                    <h5>Products Sold</h5>
+                    <div class="stat-value">9</div>
+                </div>
+            </div> {% endcomment %}
+            <div class="col-md-3" style="cursor:pointer">
+                <div class="card p-3">
+                    <h5>Total Customers</h5>
+                    <div class="stat-value">{{ total_customers }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphs and Table -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="graph-container">
+                    <h5>Level</h5>
+                    <p>Graph Placeholder</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="graph-container">
+                    <h5>Customer Fulfillment</h5>
+                    <p>Graph Placeholder</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Products -->
+        <div id="products-table" class="table-responsive rounded-3" style=" height: 200px;overflow: hidden;  transition: height 0.3s;">
+            <h3>ALL Products </h3> 
+            <button id="see-all" class="btn btn-success">see all</button>
+            <table  class="table table-striped table-bordered table-hover table-dark rounded-3" >
+                <thead>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Product name</th>
+                        <th>description</th>
+                        <th>Price</th>
+                        <th>image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                
+                
+                
+                <tbody >
+                    {% for instance in data %}
+                    <tr>
+                        <td>{{ instance.pk }}</td>
+                        <td>{{instance.fields.product_name}}</td>
+                        <td>{{instance.fields.product_description}}</td>
+                        <td>{{ instance.fields.product_price }}shs </td>
+                        <td> <img src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" width='40' height='40' alt={{instance.fields.product_name}}> </td>
+                        <td>
+                            <button class="btn btn-primary update-btn " data-product-id={{ instance.pk }} data-bs-toggle="modal" data-bs-target="#videoModal">Edit</button>
+                            <button data-product-id={{ instance.pk }} class="delete btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+
+            <!--================UPDATING A PRODUCT=====================-->
+            <div class="modal fade bd-example-modal-lg" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                  <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel"> Update Item </h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                              <!-- 16:9 aspect ratio -->
+                              <div class="ratio ratio-16x9">
+                                    <div class="row">
+                                          <div class="col-lg-8 col-11 mx-auto">
+                                          <form role="form" method="post" action="{% url 'update' %}" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="form-floating" style='margin-bottom:10px' >
+                                                      <input type="hidden" name="product_id" id="product_id"  class="form-control" placeholder="product Id" required>
+
+                                                <!-- <label for="product_id">product_id</label> -->
+                                                </div>
+
+                                                <div class="form-floating" style='margin-bottom:10px'>
+                                                      <input type="text" name="product_name" id="product_name"  class="form-control" placeholder="product_name" required>
+            
+                                                      <label for="product_name">product_name</label>
+                                                </div>
+
+                                                <div class="form-floating" style='margin-bottom:10px'>
+
+                                                      <input type="text" name="cartegory" id="cartegory" class="form-control" placeholder="cartegory" required>
+            
+                                                      <label for="price">cartegory</label>
+                                                      </div>
+
+                                                <div class="form-floating" style='margin-bottom:10px'>
+                                                      <input type="tel" name="product_description" id="product_description"  class="form-control" placeholder="product_description" required>
+            
+                                                      <label for="product_description">product_description</label>
+                                                      </div>
+
+                                                <div class="form-floating">
+
+                                                      <input type="number" name="price" id="price" class="form-control" placeholder="price" required>
+
+                                                      <label for="price">price</label>
+                                                </div>
+                                                
+
+                                                <div class="form-floating my-4">
+                                                      <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+
+                                                      <label for="image">Image</label>
+                                                </div>
+
+                                                
+
+                                                <button type="submit" class="btn btn-dark custom-btn form-control mt-4 mb-3">
+                                                Update
+                                                </button>
+
+                                                
+
+                                          </form>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  </div>
+            </div>
+   
+
+      </div>
+
+       <!-- ===================== ADDING A PRODUCT ========================-->
+
+       <div class="modal fade bd-example-modal-lg" id="AddProductModal" tabindex="-1" aria-labelledby="bd-example-modal-lg" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> ADD PRODUCTS </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                              <div class="row">
+                                    <div class="col-lg-8 col-11 mx-auto">
+                                          <section class="sign-in-form section-padding">
+                                                <div class="container">
+                                                    <div class="row">
+                                    
+                                                        <div class="col-lg-8 mx-auto col-12">
+                                    
+                                                            <div class="row">
+                                                                <div class="col-lg-11 offset-0 flex">
+                                                                    <form role="form" method="post" action="{% url 'admin' %}" enctype="multipart/form-data">
+                                                                          {% csrf_token %}
+                                    
+                                                                          <div class="form-floating" style='margin-bottom:10px;'>
+                                                                                <input type="text" name="product_name" id="product_name"  class="form-control " placeholder="product_name" required>
+                                    
+                                                                                <label for="product_name">product_name</label>
+                                                                          </div>
+                                    
+                                                                          <div class="form-floating" style='margin-bottom:10px'>
+                                    
+                                                                                <input type="text" name="cartegory" id="cartegory" class="form-control" placeholder="cartegory" required>
+                                    
+                                                                                <label for="price">cartegory</label>
+                                                                            </div>
+                                    
+                                                                          <div class="form-floating" style='margin-bottom:10px'>
+                                                                                <input type="tel" name="product_description" id="product_description"  class="form-control" placeholder="product_description" required>
+                                    
+                                                                                <label for="product_description">product_description</label>
+                                                                            </div>
+                                    
+                                                                        <div class="form-floating">
+                                    
+                                                                            <input type="number" name="price" id="price" class="form-control" placeholder="price" required>
+                                    
+                                                                            <label for="price">price</label>
+                                                                        </div>
+                                                                        
+                                    
+                                                                        <div class="form-floating my-4">
+                                                                            <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+                                    
+                                                                            <label for="image">Image</label>
+                                                                        </div>
+                                    
+                                                                        
+                                    
+                                                                        <button type="submit" class="btn btn-dark custom-btn form-control mt-4 mb-3">
+                                                                            Add product
+                                                                        </button>
+                                    
+                                                                       
+                                    
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                    
+                                                            
+                                                            
+                                                        </div>
+                                    
+                                                        
+                                                </div>
+                                            </section>
+
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+      
+
+      
+        <div class="table-responsive mt-5 rounded-3" style=" height: 200px;overflow: hidden;  transition: height 1s;"  id="orders-table">
+            <h3>ORDERS </h3>
+            <button id="see-all_orders" class="btn btn-success">see all</button>
+            <table class="table table-striped table-bordered table-hover table-dark rounded-3">
+                  <thead>
+                      <tr>
+                          <th>Order Id</th>
+                          <th>Customer</th>
+                          <th>Product name</th>
+                          <th>description</th>
+                          <th>Price</th>
+                          <th>image</th>
+                          <th>order status</th>
+                          <th>date ordered</th>
+                          <th>payment_status</th>
+                      </tr>
+                  </thead>
+                  
+                  
+                  
+                  <tbody>
+                      {% for order in orders %}
+                      <tr>
+                          <td>{{ order.pk }}</td>
+                          <td>{{order.order_user.username}}</td>
+                          <td>{{order.cart.cart_product.product_name}}</td>
+                          <td>{{order.cart.cart_product.product_description}}</td>
+                          <td>{{ order.cart.cart_product.product_price }}shs </td>
+                          <td> <img src="{{ MEDIA_URL }}{{ order.cart.cart_product.product_image }}" width='40' height='40' alt={{order.cart.cart_product.product_name}}> </td>
+                          <td>{{order.order_status}}</td>
+                          <td>{{order.order_date}}</td>
+                          <td> {{order.payment_status}} <td>
+                      </tr>
+                      {% endfor %}
+                      
+                  </tbody>
+            </table>
+      </div>
+
+      <!-- ===================== A D D I N G    TO   G A L L E R Y ========================-->
+
+      <div class="modal fade bd-example-modal-lg" id="AddGalleryModal" tabindex="-1" aria-labelledby="bd-example-modal-lg" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> ADD TO GALLERY </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                              <div class="row">
+                                    <div class="col-lg-8 col-11 mx-auto">
+                                          <section class="sign-in-form section-padding">
+                                                <div class="container">
+                                                    <div class="row">
+                                    
+                                                        <div class="col-lg-8 mx-auto col-12">
+                                    
+                                                            <div class="row">
+                                                                <div class="col-lg-11 offset-0 flex">
+                                                                    <form role="form" method="post" action="{% url 'gallery' %}" enctype="multipart/form-data">
+                                                                          {% csrf_token %}
+                                    
+                                                                          <div class="form-floating" style='margin-bottom:10px;'>
+                                                                                <input type="text" name="title" id="title"  class="form-control " placeholder="title" required>
+                                    
+                                                                                <label for="title">title</label>
+                                                                          </div>
+                                    
+                                                                        <div class="form-floating my-4">
+                                                                            <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+                                    
+                                                                            <label for="image">Image</label>
+                                                                        </div>
+                                    
+                                                                        
+                                    
+                                                                        <button type="submit" class="btn btn-dark custom-btn form-control mt-4 mb-3">
+                                                                            Add Gallery
+                                                                        </button>
+                                    
+                                                                       
+                                    
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                    
+                                                            
+                                                            
+                                                        </div>
+                                    
+                                                        
+                                                </div>
+                                            </section>
+
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+       
+
+      
+
+      
+      
+       <div id="gallery-table" class="table-responsive rounded-3 mt-5" style=" height: 200px;overflow: hidden;  transition: height 0.3s;">
+      <h3> Gallery </h3> 
+            <button id="see-all_gallery" class="btn btn-success">see all</button>
+            <table  class="table table-striped table-bordered table-hover table-dark rounded-3" >
+                <thead>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Title</th>
+                        <th>image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                
+                
+                
+                <tbody >
+                    {% for instance in gallery %}
+                    <tr>
+                        <td>{{ instance.pk }}</td>
+                        <td>{{instance.title}}</td>
+                        <td> <img src="{{ MEDIA_URL }}{{ instance.image }}" width='40' height='40' alt={{instance.title}}> </td>
+                        <td>
+                            <button data-product-id={{ instance.pk }} class="delete btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+      </div> 
+
+
+    </div>
+
+      <!-- JAVASCRIPT FILES -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static "js-sign/jquery.min.js" %} "></script>
+      <script src="{% static "js-sign/bootstrap.bundle.min.js" %} "></script>
+      <script src="{% static "js-sign/Headroom.js" %} "></script>
+      <script src="{% static "js-sign/jQuery.headroom.js" %} "></script>
+      <script src="{% static "js-sign/slick.min.js" %} "></script>
+      <script src="{% static "js-sign/custom.js" %} "></script>
+
+    <script>
+
+
+      $(document).on('click', '.update-btn', function(e) {
+            e.preventDefault();
+            
+            // Get the item ID from the data attribute
+            const product_id = $(this).data('product-id');
+            
+            // Set the value of the hidden input to this item ID
+            $('#product_id').val(product_id);
+            
+            // Optionally, you can also submit the form here if you want
+            //$('#updateForm').submit();
+        });
+        
+        {% comment %} $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+            
+            // Get the product ID from the data attribute of the clicked button
+            var product_id = $(this).data('product-id');
+        
+            $.ajax({
+                type: 'POST',
+                url: '{% url "delete_gallery" %}',
+                data: {
+                    product_id: product_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    console.log(json);
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error(errmsg);
+                }
+            });
+
+            location.reload()
+        });  {% endcomment %}
+
+      document.getElementById("see-all").addEventListener("click", function () {
+            var x = document.getElementById("products-table");
+                  if (x.style.height ==="200px"){
+                  x.style.height ="auto";
+                  }
+                  else{
+                  x.style.height = "200px";
+                  }
+      });
+
+      document.getElementById("see-all_orders").addEventListener("click", function () {
+            var x = document.getElementById("orders-table");
+                  if (x.style.height ==="200px"){
+                  x.style.height ="auto";
+                  }
+                  else{
+                  x.style.height = "200px";
+                  }
+      });
+
+      document.getElementById("see-all_gallery").addEventListener("click", function () {
+            var x = document.getElementById("gallery-table");
+                  if (x.style.height ==="200px"){
+                  x.style.height ="auto";
+                  }
+                  else{
+                  x.style.height = "200px";
+                  }
+      });
+
+
+
+  </script>
+</body>
+</html>
