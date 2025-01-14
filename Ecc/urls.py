@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns =[
       path('verify/', views.verify_signature,name='verify'),
-    path('', views.index,name='index'),
+    path('', views.userpage,name='userpage'),
     path('service/', views.service,name="service"),
     path('contacts/', views.contacts,name="contact"),
     path('about/', views.about,name="about"),
@@ -36,6 +36,8 @@ urlpatterns =[
     path('payments/', views.payments,name="payments"),
     path('Send_email/', views.Send_email,name="Send_email"),
     path('product/<int:pk>/', views.detail, name='detail'),
+    path('sell/', views.Sell,name='sell'),
+    path('search/', views.search_view, name='search'),
 
 ]
 if settings.DEBUG:

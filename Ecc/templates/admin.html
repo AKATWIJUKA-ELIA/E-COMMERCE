@@ -190,40 +190,40 @@
                                           <form role="form" method="post" action="{% url 'update' %}" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="form-floating" style='margin-bottom:10px' >
-                                                      <input type="hidden" name="product_id" id="product_id"  class="form-control" placeholder="product Id" required>
+                                                      <input type="hidden" name="product_id" id="product_id"  class="form-control" placeholder="product Id" >
 
                                                 <!-- <label for="product_id">product_id</label> -->
                                                 </div>
 
                                                 <div class="form-floating" style='margin-bottom:10px'>
-                                                      <input type="text" name="product_name" id="product_name"  class="form-control" placeholder="product_name" required>
+                                                      <input type="text" name="product_name" id="product_name"   class="form-control" placeholder="product_name" >
             
                                                       <label for="product_name">product_name</label>
                                                 </div>
 
                                                 <div class="form-floating" style='margin-bottom:10px'>
 
-                                                      <input type="text" name="cartegory" id="cartegory" class="form-control" placeholder="cartegory" required>
+                                                      <input type="text" name="cartegory" id="cartegory" class="form-control" placeholder="cartegory" >
             
                                                       <label for="price">cartegory</label>
                                                       </div>
 
                                                 <div class="form-floating" style='margin-bottom:10px'>
-                                                      <input type="tel" name="product_description" id="product_description"  class="form-control" placeholder="product_description" required>
+                                                      <input type="tel" name="product_description" id="product_description"  class="form-control" placeholder="product_description" >
             
                                                       <label for="product_description">product_description</label>
                                                       </div>
 
                                                 <div class="form-floating">
 
-                                                      <input type="number" name="price" id="price" class="form-control" placeholder="price" required>
+                                                      <input type="number" name="price" id="price" class="form-control" placeholder="price" >
 
                                                       <label for="price">price</label>
                                                 </div>
                                                 
 
                                                 <div class="form-floating my-4">
-                                                      <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+                                                      <input type="file" name="image" id="image"  class="form-control" placeholder="Image" >
 
                                                       <label for="image">Image</label>
                                                 </div>
@@ -471,7 +471,7 @@
                         <td>{{instance.title}}</td>
                         <td> <img src="{{ MEDIA_URL }}{{ instance.image }}" width='40' height='40' alt={{instance.title}}> </td>
                         <td>
-                            <button data-product-id={{ instance.pk }} class="delete btn btn-danger">Delete</button>
+                            <button data-product-id={{ instance.pk }} class=" btn btn-danger">Delete</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -508,7 +508,7 @@
             //$('#updateForm').submit();
         });
         
-        {% comment %} $(document).on('click', '.delete', function(e) {
+       $(document).on('click', '.delete', function(e) {
             e.preventDefault();
             
             // Get the product ID from the data attribute of the clicked button
@@ -516,7 +516,7 @@
         
             $.ajax({
                 type: 'POST',
-                url: '{% url "delete_gallery" %}',
+                url: '{% url "delete" %}',
                 data: {
                     product_id: product_id,
                     csrfmiddlewaretoken: '{{ csrf_token }}',
@@ -531,7 +531,7 @@
             });
 
             location.reload()
-        });  {% endcomment %}
+        });  
 
       document.getElementById("see-all").addEventListener("click", function () {
             var x = document.getElementById("products-table");

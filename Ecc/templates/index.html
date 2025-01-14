@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>amazima restaurant</title>
+    <title>Light</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="golden">
     <meta content="" name="hotel">
@@ -107,19 +107,13 @@
       {% endif %}
 
         <!-- HERO Start -->
-            <div class="container-fluid row p-0 mt-2 mb-5 flex ml-5 ">
-
-                  <div class="col-2 ml-5 my-5 bg-light rounded-3 border"  >
-                        <h1 class="text-dark fs-3 " >Cartegories</h1>
-                        <ul class="gap-3" >
-                        <li>
-                        <h1 class="text-dark fs-6">
-                              Phones & Tablets
-                        </h1>
-                        </li>
-
-                  </ul>
-                  </div>
+            <div class="container-fluid row p-0 mt-2 mb-5 flex ml-5 bg-primary ">
+                        <div class="col-2 ml-5 my-5 bg-light rounded-3 border"  >
+                                <h1 class="text-dark fs-3 " >Cartegories</h1>
+                                <div class="gap-3 " >
+                                <h1 class="text-dark "> Phones & Tablets </h1>
+                                </div>
+                        </div>
 
                   <div id="header-carousel" class="carousel  slide  col " data-bs-ride="carousel">
 
@@ -130,8 +124,8 @@
                                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                           <div class="p-3" style="max-width: 700px;">
                                                 
-                                                <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">Amazima Restaurant</h1> -->
-                                                <a href="{% static "doc/amazima new 24 menul copy.pdf" %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Menu</a>
+                                               
+                                                <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a>
                                                 <a href="#meals" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a>
                                           </div>
                                           </div>
@@ -141,8 +135,7 @@
                                           <img class="w-100" src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" height="400" alt="Image">
                                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                           <div class="p-3" style="max-width: 700px;">
-                                                <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">Amazima Restaurant</h1> -->
-                                                <a href="{% static "doc/amazima new 24 menul copy.pdf" %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Menu</a> <!-- ADD MENU PDF-->
+                                                <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a>
                                                 <a href="#meals"  class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a>
                                           </div>
                                           </div>
@@ -166,7 +159,7 @@
 
                         <div class="row" >
                               <!--============== BREAK FAST============ -->
-                        <div class="container ">
+                        <div class="container mb-5">
                               <div class="container">
                               
                               <div class="row g-4">
@@ -213,10 +206,10 @@
 
         <!--=============== L U N C H     S T A R T ===============-->
 
-        <div class="container-xxl py-5">
+        {% comment %} <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    {% comment %} <h6 class="section-title text-center text-primary text-uppercase">F O O D S</h6> {% endcomment %}
+          
                     <h1 class="mb-5">MAIN <span id="meals" class="text-primary text-uppercase">COURSE</span></h1>
                 </div>
                 <div class="row g-4">
@@ -235,13 +228,6 @@
 
                                           <div class="d-flex justify-content-between mb-3">
                                                 <h5 class="mb-0">{{instance.fields.product_name}}</h5>
-                                                {% comment %} <div class="ps-2">
-                                                <small class="fa fa-star text-primary"></small>
-                                                <small class="fa fa-star text-primary"></small>
-                                                <small class="fa fa-star text-primary"></small>
-                                                <small class="fa fa-star text-primary"></small>
-                                                <small class="fa fa-star text-primary"></small>
-                                                </div> {% endcomment %}
                                           </div>
 
                                           <p class="text-body mb-3">{{instance.fields.product_description}}</p>
@@ -262,7 +248,7 @@
                         {% endfor %}
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!--=============== F O O D S   E N D ===============-->
 
 
@@ -270,10 +256,10 @@
 
                 <!--=============== S O F T    F O O D    S T A R T ===============-->
 
-                <div class="container-xxl py-5">
+                {% comment %} <div class="container-xxl py-5">
                   <div class="container">
                       <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                          {% comment %} <h6 class="section-title text-center text-primary text-uppercase">F O O D S</h6> {% endcomment %}
+            
                           <h1 class="section-title  mb-5">SALADS & SOFT FOODS <span id="meals" class="text-primary text-uppercase"></span></h1>
                       </div>
                       <div class="row g-4">
@@ -314,12 +300,12 @@
                               {% endfor %}
                       </div>
                   </div>
-              </div>
+              </div> {% endcomment %}
               <!--=============== S O F T    F O O D    S T A R T ===============-->
 
 
         <!-- Service Start -->
-        <div class="container-xxl py-5">
+        {% comment %} <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Services</h6>
@@ -379,12 +365,12 @@
 
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!-- Service End -->
 
 
         <!-- Testimonial Start -->
-        <div class="container p-0 mb-5">
+        {% comment %} <div class="container p-0 mb-5">
             <div class=" justify-content-center">
                   <h1 class="text-center">
                         TESTIMONIALS
@@ -392,18 +378,6 @@
             </div>
             <div id="testimonial" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <!-- <div class="carousel-item ">
-                        <img class="w-100" src="{% static 'images/food3.jpg' %}" height="800" width='400' alt="Image">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Redifined</h6>
-                                <h1 class="display-3 text-white mb-4 animated slideInDown">Discover A Brand Luxurious Hotel</h1>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Menu</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="carousel-item active col-lg-4 col-md-6 wow " data-wow-delay="0.4s">
                         <a class="service-item rounded" href="">
                             <div class="service-icon bg-transparent border rounded p-1">
@@ -452,7 +426,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-        </div>
+        </div> {% endcomment %}
         <!-- Testimonial End -->
 
 
