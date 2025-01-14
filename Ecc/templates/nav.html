@@ -34,49 +34,42 @@
        <!-- Header Start -->
        <div class="container-fluid bg-dark px-0">
             <div class="row gx-0 ">
-      
-                
-
                 <div class="col-lg-9">
-
+      
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        {% comment %} <div style="margin-top: 0%;" class="col-2">
-                              <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="amazima restaurant logo"
-                                  height="100px" width="100px"
-                                  style="border-radius: 20px;"><a/>
-              
-                          </div> {% endcomment %}
-  
-                          <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Light E-Shop <br>  </h1>
+      
+                          <div  class="col-lg-3 bg-dark  d-none d-lg-block" style="margin-left: 3%;">
+                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br> <span>
+                                     </span> </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
-                          <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Light E-Shop</h1>
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
+                          <h1
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
-                        <dzxxxiv style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-                          <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
-                            {% comment %} <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
-                            <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a> {% endcomment %}
-                            <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                            <a id="user-welcome" class="nav-item nav-link text-truncate" onclick="contact">Hi-{{ username }}</a>
-                            {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
-                          </div>
+      
+                        <div style="margin-left: 20%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
+      
+                              <div style="margin-top: 0%;" class="col-10 px-5 d-flex align-items-center">
+                              <input type="text"  name="search" id="search"  class="form-control flex rounded-3 me-3 "  placeholder="Search products, brands and categories" >
+                              <button type="button" class="btn btn-primary" aria-label="Reset">Search</button>
+                              </div> 
+      
+                              <div class="navbar-nav mr-auto py-0">
+                              <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
+                              <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
+                              <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link text-truncate" style="cursor: pointer;" >Hi-{{ username }}</a>
+                              </div>
                           <ul class="navbar-nav mb-lg-0">
                             <li class="nav-item">
-                              <a href="{% url 'cart' %}" class="btn btn-sm btn-light rounded py-2 px-4">Cart({{ items_on_cart }})</a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{% url 'log_out' %}" class="btn btn-sm btn-outline-light rounded py-2 px-4">Logout</a>
+                              <a href="{% url 'log_out' %}" class="btn btn-sm btn-light rounded py-2 px-4">LogOut</a>
                             </li>
                           </ul>
-                        </dzxxxiv>
+                        </div>
                       </nav>
                 </div>
             </div>
@@ -103,7 +96,7 @@
         <div class="row gx-0 ">
           <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-              <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+              <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                 <h1   
      style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant</h1>
               </a>
@@ -112,7 +105,7 @@
               </button>
               <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                 <div class="navbar-nav mr-auto py-0">
-                  <a href="{% url 'index' %}" class="nav-item nav-link current" onclick="home">Home</a>
+                  <a href="{% url 'userpage' %}" class="nav-item nav-link current" onclick="home">Home</a>
                   <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
                   <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
                   <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>

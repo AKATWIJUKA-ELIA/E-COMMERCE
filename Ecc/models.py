@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser , PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import UserManager
+from PIL import Image
 
 class News_letter(models.Model):
     email = models.EmailField(blank=True,default=None)
@@ -49,11 +50,20 @@ class Customers(AbstractBaseUser , PermissionsMixin):
      
 class Products(models.Model):
       product_image = models.ImageField(upload_to='products')
+      def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the original image first
+        img = Image.open(self.product_image.path)
+        # Resize or crop the image
+        output_size = (1156, 765)  # Desired size
+        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
+ # Save the modified image back to the same path
+        img.save(self.product_image.path)
       product_id = models.AutoField(primary_key=True,unique=True)
       product_name = models.CharField(max_length=255)
-      product_price = models.DecimalField(max_digits=10, decimal_places=2)
+      product_price = models.DecimalField(max_digits=100, decimal_places=2)
       product_description = models.CharField(max_length=255)
       product_cartegory = models.CharField(max_length=255,default='breakfast')
+      product_condition = models.CharField(max_length=255,default='None')
 
       
 class Cart(models.Model):
@@ -99,6 +109,3 @@ class Payments(models.Model):
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
     title = models.CharField(max_length=255)
-      
-      
-            

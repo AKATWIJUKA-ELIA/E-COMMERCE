@@ -3,6 +3,7 @@ from datetime import timedelta, timezone
 from django.utils.timezone import now
 from django.shortcuts import render, redirect,get_object_or_404
 from Ecc.models import News_letter, Customers,Products,Orders,Cart,Gallery
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.core import serializers
@@ -115,13 +116,16 @@ def index(request):
             return  render(request, 'index.html',context=context)
 
 def userpage(request):
-      if request.user.is_authenticated:
+#       if request.user.is_authenticated:
             try:
-                  data = serializers.serialize("python",Products.objects.filter(product_cartegory='drinks'))
+                  data = serializers.serialize("python",Products.objects.all())
                   lunch = serializers.serialize("python",Products.objects.filter(product_cartegory='Lunch'))
                   salad = serializers.serialize("python",Products.objects.filter(product_cartegory='salad'))
                   # data = Products.objects.all()
-                  items_on_cart =  Cart.objects.all().filter(cart_user_id=request.user.Customer_id)
+                  if request.user.is_authenticated:
+                          items_on_cart =  Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
+                  else:
+                          items_on_cart =''
             except Cart.DoesNotExist:
                   context = {'data':data,
 
@@ -134,13 +138,13 @@ def userpage(request):
                              'lunch':lunch,
                              'salad':salad,
                              'MEDIA_URL': settings.MEDIA_URL,
-                             'items_on_cart':items_on_cart.count(),
+                             'items_on_cart':items_on_cart,
                               'username':request.user.username[:5]
                               }
             # print(items_on_cart)
             return  render(request, 'userpage.html',context=context)
-      else:
-            return redirect('sign_in')
+#       else:
+#             return render(request,'userpage.html')
 def profile(request):
       if request.user.is_authenticated:
             email = request.user.email
@@ -300,16 +304,36 @@ def delete(request):
 
 def update(request):
       if request.method == 'POST':
-            product_id = request.POST['product_id']
-            product = Products.objects.get(product_id=product_id)
-            product.product_name = request.POST['product_name']
-            product.product_price = request.POST['price']
-            product.product_description = request.POST['product_description']
-            product.product_cartegory = request.POST['cartegory']
-            product.product_image = request.FILES.get('image')
-            product.save()
-            messages.info(request, 'product updated successfully')
-            return redirect('admin')
+                product_id = request.POST['product_id']
+                product = Products.objects.get(product_id=product_id)
+                if request.POST['product_name']:
+                        product.product_name = request.POST['product_name']
+                        product.save()
+                else:
+                        product.product_name = product.product_name
+                if request.POST['price']:
+                        product.product_price = request.POST['price']
+                        product.save()
+                else:
+                        product.product_price =product.product_price
+                if request.POST['product_description']:
+                        product.product_description = request.POST['product_description']
+                        product.save()
+                else:
+                        product.product_description = product.product_description
+                if request.POST['cartegory']:
+                        product.product_cartegory = request.POST['cartegory']
+                        product.save()
+                else:
+                        product.product_cartegory = product.product_cartegory
+                if request.FILES.get('image'):
+                        product.product_image = request.FILES.get('image')
+                        product.save()
+                else:
+                        product.product_image = product.product_image
+                product.save()
+                messages.info(request, 'product updated successfully')
+      return redirect('admin')
 
 
 def service(request):
@@ -697,7 +721,7 @@ def sign_in(request):
 
 def log_out(request):
       logout(request)
-      return  redirect('index')
+      return  redirect('userpage')
 
 
 def news_letter(request):
@@ -725,7 +749,7 @@ def news_letter(request):
                   new = News_letter.objects.create(email=email)
                   new.save()
                   messages.info(request, "Thank you for Subscribing")
-            return render(request,'index.html')
+            return render(request,'userpage.html')
 
 # =============S E N D   AN   E M A I L==========
 def Send_email(request):
@@ -775,7 +799,7 @@ def Send_email(request):
 
 def detail(request, pk):
       detail = Products.objects.get(product_id=pk)
-      return render(request, 'preview.html', {'detail': detail})
+      return render(request, 'preview.html', {'detail': detail,'username':request.user.username[:5],'seller_email':request.user.email, 'seller_contact':request.user.phone_number})
 
 def gallery(request):
       if request.method =="POST":
@@ -890,3 +914,33 @@ def SendEmail(server_email,email_receiver,subject,body):
             smtp.login(server_email, email_password)
             smtp.sendmail(server_email, email_receiver, em.as_string())
       return 0
+
+def Sell(request):
+      if request.user.is_authenticated:
+            if request.method == "POST":
+                        product_name = request.POST['name']
+                        product_price = request.POST['price']
+                        product_cartegory = request.POST['cartegory']
+                        product_condition = request.POST['condition']
+                        product_description = request.POST['description']
+                        product_image = request.FILES.get('image')
+                        product = Products.objects.create(product_name=product_name,
+                                                        product_price=product_price,product_cartegory=product_cartegory,
+                                                        product_condition=product_condition,product_description=product_description,
+                                                        product_image=product_image)
+                        product.save()
+                        messages.info(request,"product added successfully")
+                        return redirect('sell')
+      else:
+              return redirect('sign_in')
+                
+      return render(request, 'sell.html',{"username":request.user.username[:5]})
+
+def search_view(request):
+    query = request.GET.get('q')  # Get the search term from the URL query parameter
+    results = []
+    if query:
+        results = Products.objects.filter(
+            Q(product_name__icontains=query) | Q(product_description__icontains=query) | Q(product_cartegory__icontains=query)  # Adjust fields as needed
+        )
+    return render(request, 'search_results.html', {'results': results, 'query': query})
