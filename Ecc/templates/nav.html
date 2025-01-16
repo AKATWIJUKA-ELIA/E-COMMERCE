@@ -1,7 +1,7 @@
 {% load static %}
 <head>
     <meta charset="utf-8">
-    <title>Light E-Shop</title>
+    <title> E-Light</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="golden">
     <meta content="" name="hotel">
@@ -40,19 +40,19 @@
       
                           <div  class="col-lg-3 bg-dark  d-none d-lg-block" style="margin-left: 3%;">
                               <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br> <span>
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br> <span>
                                      </span> </h1>
                               </a>
                           </div>
                         <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
       
-                        <div style="margin-left: 20%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
+                        <div style="margin-left: 0%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
       
                               <div style="margin-top: 0%;" class="col-10 px-5 d-flex align-items-center">
                               <input type="text"  name="search" id="search"  class="form-control flex rounded-3 me-3 "  placeholder="Search products, brands and categories" >
@@ -65,7 +65,10 @@
                               <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link text-truncate" style="cursor: pointer;" >Hi-{{ username }}</a>
                               </div>
                           <ul class="navbar-nav mb-lg-0">
-                            <li class="nav-item">
+                          <li class="nav-item px-1">
+                              <a href="{% url 'cart' %}" class="btn btn-sm btn-light rounded py-2 px-4">Cart({{ items_on_cart }})</a>
+                            </li>
+                            <li class="nav-item px-1">
                               <a href="{% url 'log_out' %}" class="btn btn-sm btn-light rounded py-2 px-4">LogOut</a>
                             </li>
                           </ul>

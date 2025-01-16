@@ -64,14 +64,14 @@ class Products(models.Model):
       product_description = models.CharField(max_length=255)
       product_cartegory = models.CharField(max_length=255,default='breakfast')
       product_condition = models.CharField(max_length=255,default='None')
-
+      product_owner = models.ForeignKey(to=Customers,on_delete=models.CASCADE,default=None)
       
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True, unique=True)
     cart_user = models.ForeignKey(to=Customers, on_delete=models.CASCADE)  # Link each cart to a customer (user)
     cart_product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='cart_items')  # Link each cart to a product
     quantity = models.PositiveIntegerField(default=1)  # Quantity of the product in the cart
-    cart_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Total price for this cart item
+    cart_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)  # Total price for this cart item
 
     def save(self, *args, **kwargs):
         # Update cart amount based on product price and quantity

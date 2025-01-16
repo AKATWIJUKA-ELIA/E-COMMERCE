@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.core import serializers
 from django.http import JsonResponse
-from django.db.models import Sum
+from django.db.models import Sum 
 from django.db import transaction
 import requests
 import uuid
@@ -153,6 +153,7 @@ def profile(request):
             user = Customers.objects.get(Customer_id=request.user.Customer_id)
             items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
             orders = Orders.objects.filter(order_user=user)
+            products = Products.objects.filter(product_owner=user)
             # print(address)
             context={
                   'email':email,
@@ -161,6 +162,7 @@ def profile(request):
                   'username':request.user.username[:5],
                   'items_on_cart':items_on_cart,
                   'orders':orders,
+                  'products':products,
             }
 
             return render(request, 'profile.html', context=context)
@@ -799,7 +801,7 @@ def Send_email(request):
 
 def detail(request, pk):
       detail = Products.objects.get(product_id=pk)
-      return render(request, 'preview.html', {'detail': detail,'username':request.user.username[:5],'seller_email':request.user.email, 'seller_contact':request.user.phone_number})
+      return render(request, 'preview.html', {'detail': detail,'username':request.user.username[:5]})
 
 def gallery(request):
       if request.method =="POST":
@@ -917,6 +919,8 @@ def SendEmail(server_email,email_receiver,subject,body):
 
 def Sell(request):
       if request.user.is_authenticated:
+            name = request.user.username
+            customer = Customers.objects.get(username=name)
             if request.method == "POST":
                         product_name = request.POST['name']
                         product_price = request.POST['price']
@@ -927,7 +931,7 @@ def Sell(request):
                         product = Products.objects.create(product_name=product_name,
                                                         product_price=product_price,product_cartegory=product_cartegory,
                                                         product_condition=product_condition,product_description=product_description,
-                                                        product_image=product_image)
+                                                        product_image=product_image,product_owner=customer)
                         product.save()
                         messages.info(request,"product added successfully")
                         return redirect('sell')
@@ -943,4 +947,10 @@ def search_view(request):
         results = Products.objects.filter(
             Q(product_name__icontains=query) | Q(product_description__icontains=query) | Q(product_cartegory__icontains=query)  # Adjust fields as needed
         )
-    return render(request, 'search_results.html', {'results': results, 'query': query})
+        print(results)
+    return render(request, 'userpage.html', {'results': results, 'query': query,"username":request.user.username})
+
+def footer(request):
+        current_year = now()
+        print(current_year)
+        return render(request, 'footer.html',{"current_year":current_year})

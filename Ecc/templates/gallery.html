@@ -4,7 +4,7 @@
   
   <head>
       <meta charset="utf-8">
-      <title>amazima restaurant</title>
+      <title>E-Light</title>
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
       <meta content="" name="golden">
       <meta content="" name="hotel">
@@ -54,19 +54,19 @@
   
                       <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                           <div style="margin-top: 0%;" class="col-2">
-                               <a href="{% url 'index' %}"> <img src="{% static 'images/logo.png' %}" alt="amazima logo"
+                               <a href="{% url 'userpage' %}"> <img src="{% static 'images/logo.png' %}" alt="amazima logo"
                                     height="100px" width="100px"
                                     style="border-radius: 20px;"></a>
   
                             </div>
   
                             <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                                <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
                                     <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant <br> <span>
                                        </span> </h1>
                                 </a>
                             </div>
-                          <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                          <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                             <h1
                  style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant</h1>
                           </a>
@@ -75,7 +75,7 @@
                           </button>
                           <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                              <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
+                              <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
                               <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
                               <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
                               <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>

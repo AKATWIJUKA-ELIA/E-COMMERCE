@@ -55,13 +55,13 @@
 
                           <div  class="col-lg-3 bg-dark  d-none d-lg-block" style="margin-left: 3%;">
                               <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br> <span>
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br> <span>
                                      </span> </h1>
                               </a>
                           </div>
                         <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
@@ -116,33 +116,42 @@
 
                 <div class="col-2 d-flex flex-column h-75 bg-white  ml-5 my-5 rounded-3 border"  >
                         <h1 class="text-dark fs-3 " >Cartegories</h1>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Vehicles </h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Electronics</h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" >Fashion </h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Properties</h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Health </h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Art and Crafts </h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2  " style="height: 40px;" >Accessories  </h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Furnitue</h1>
-                        </div>
-                        <div class="cartegory_item col-12 px-o " >
-                        <h1 class="text-dark fw-light  fs-5 p-2 " style="height: 40px;" > Services </h1>
-                        </div>
+                        <form method="get" action="{% url 'search' %}" >
+                         <button type="submit" name="q" value="Vehicle" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Vehicles
+                        </button>
+                        <button type="submit" name="q" value="Electronic" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Electronics
+                        </button>
+                        <button type="submit" name="q" value="Fashion" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Fashion
+                        </button>
+                       
+                       <button type="submit" name="q" value="Properties" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Properties
+                        </button>
+
+                         <button type="submit" name="q" value="Health" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Health
+                        </button>
+
+                         <button type="submit" name="q" value="Art and Crafts" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                        Art and Crafts
+                        </button>
+
+                          <button type="submit" name="q" value="Accessories" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                       Accessories
+                        </button>
+
+                         <button type="submit" name="q" value="Furnitue" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                       Furnitue
+                        </button>
+
+                        <button type="submit" name="q" value="Services" class=" text-dark fw-light  fs-5 p-2 cartegory_item col-12 px-o border border-0" style="height: 40px;">
+                       Services
+                        </button>
+                        </form>
+                       
                 </div>
 
                   <div id="header-carousel" class="carousel  slide  col " data-bs-ride="carousel">
@@ -160,6 +169,7 @@
                                           </div>
                                           </div>
                                     </div>
+                                    {% if data %}
                                     {% for instance in data %}
                                     <div class="carousel-item">
                                           <img class="w-100" src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" height="400" alt="Image">
@@ -172,6 +182,18 @@
                                           </div>
                                     </div>
                                     {% endfor %}
+                                    {% else %}
+                                    <div class="carousel-item">
+                                          <img class="w-100" src="{% static 'images/Screenshot 2023-10-10 130155copy.png' %}"  height="400" alt="Image">
+                                          <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                          <div class="p-3" style="max-width: 700px;">
+                                                <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">Amazima Restaurant</h1> -->
+                                                <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a> <!-- ADD MENU PDF-->
+                                                <a href="#meals"  class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a>
+                                          </div>
+                                          </div>
+                                          {% endif %}
+
                                     
                                     <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
                                     data-bs-slide="prev">
@@ -192,7 +214,38 @@
                               <!--============== BREAK FAST============ -->
                         <div class="container mb-5">
                               <div class="container">
-                              
+                              {% if results %}
+                              <div class="row g-4 mt-2">
+                              <h2>Search Results for "{{ query }}"</h2>
+                                    {% for instance in results %}
+                                    <div id="products" class="col-lg-3 col-md-6 mb-5 wow fadeInUp  " data-wow-delay="0.1s">
+                                                
+                                          <div id="" class="product_data col room-item bg-white shadow rounded rounded-3 overflow-hidden">
+
+                                                <div class="position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
+                                                      <a href="{% url 'detail' instance.pk %}">
+                                                      <img class="img-fluid" src="{{ MEDIA_URL }}{{ instance.product_image }}" width="300" height="200" alt="food">
+                                                      </a>
+                                                </div>
+
+                                                <div class="p-1">
+                                                      <div class="d-flex  justify-content-center text-center ">
+                                                            <h5 class="mb-0 ">{{instance.product_name}}</h5>
+
+                                                      </div>
+
+                                                      <div class="d-flex flex-column justify-content-between">
+                                                                <p class="text-body "> {{ instance.product_description|truncatechars:25 }}</p>
+                                                                 <p class=" px-4" > Ushs: {{ instance.product_price }} </p>
+                                                      </div> 
+                                                </div>
+
+                                          </div>
+
+                                    </div>
+                                    {% endfor %}
+                              </div>
+                              {% else %}
                               <div class="row g-4 mt-3">
                                     {% for instance in data %}
                                     <div id="products" class="col-lg-3 col-md-6 wow fadeInUp  " data-wow-delay="0.1s">
@@ -222,6 +275,7 @@
                                     </div>
                                     {% endfor %}
                               </div>
+                              {% endif %}
                               
                               </div>
                         </div>

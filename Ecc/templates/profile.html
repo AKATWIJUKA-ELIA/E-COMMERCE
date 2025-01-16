@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Light E-Shop</title>
+    <title> E-Light</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="light">
     <meta content="" name="light">
@@ -58,20 +58,20 @@
                           </div>
   
                           <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br> </h1>
+                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br> </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                           <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
+                            <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
                             <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
                             <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link pointer text-truncate" >Hi-{{ username }}</a>
                           </div>
@@ -109,7 +109,7 @@
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb" class="main-breadcrumb">
                           <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'userpage' %}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">User Profile</li>
                           </ol>
                         </nav>
@@ -220,7 +220,51 @@
                                         </table>
                                     </div>
                                     {% else %}
-                                    <p> Your Orders will Appear once make them</p>
+                                    <p> Your Orders will Appear here once make them</p>
+                                {% endif %}
+                                </div>
+
+                                <div class="container">
+                                    <h2>Your Available Products</h2>
+                                       
+                                        {% if products %}
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order Id</th>
+                                                    <th>Product name</th>
+                                                    <th>description</th>
+                                                    <th>Price</th>
+                                                    <th>image</th>
+                                                    <th>order status</th>
+                                                    <th>date Added</th>
+                                                    <th>payment_status</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            
+                                            
+                                            <tbody>
+                                                {% for product in products %}
+                                                <tr>
+                                                    <td>{{ product.pk }}</td>
+                                                    <td>{{product.product_name}}</td>
+                                                    <td>{{product.product_description}}</td>
+                                                    <td>{{ product.product_price }} </td>
+                                                    <td> <img src="{{ MEDIA_URL }}{{ product.product_image }}" width='40' height='40' alt={{product.product_name}}> </td>
+                                                    <td>{{product.order_status}}</td>
+                                                    <td>{{product.order_date}}</td>
+                                                    <td> {{product.payment_status}} <td>
+                                                      
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% else %}
+                                    <p> Your Products will Appear here once Upload them</p>
                                 {% endif %}
                                 </div>
                             </div>

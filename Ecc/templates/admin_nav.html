@@ -1,7 +1,7 @@
 {% load static %}
 <head>
     <meta charset="utf-8">
-    <title>amazima restaurant</title>
+    <title>E-Light</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="golden">
     <meta content="" name="hotel">
@@ -48,20 +48,20 @@
                           </div>
   
                           <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant <br>  </h1>
+                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">E-Light <br>  </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <dzxxxiv style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                           <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
+                            <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
                             <a id="user-welcome" class="nav-item nav-link" onclick="contact">Hi-{{ username }}</a>
                             {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
                           </div>

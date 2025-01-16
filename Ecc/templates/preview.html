@@ -60,23 +60,32 @@
                           </div>
   
                           <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Light E-Shop<br> </h1>
+                              <a href="userpage.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light<br> </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                           <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link " onclick="home">Home</a>
+                            <a href="{% url 'userpage' %}" class="nav-item nav-link " onclick="home">Home</a>
                             <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
+                             
                             {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
                           </div>
+                          <ul class="navbar-nav mb-lg-0">
+                            <li class="nav-item">
+                              <a href="{% url 'sign_in' %}" class="btn btn-sm btn-light rounded py-2 px-4">LogIn</a>
+                            </li>
+                            <li class="nav-item">
+                              <a href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-light rounded py-2 px-4">SignUp</a>
+                            </li>
+                          </ul>
                           
                         </div>
                       </nav>
@@ -130,12 +139,12 @@
                                                             </div>
                                                             <div class="ps-2">
                                                                   <h6 class="text-truncate">
-                                                                  Seller's Contact: <a href='tel:{{ seller_contact }}' style="text-decoration: none; color: inherit;">{{ seller_contact }} </a>
+                                                                  Seller's Contact: <a href='tel:{{ detail.product_owner.phone_number }}' style="text-decoration: none; color: inherit;">{{ detail.product_owner.phone_number }} </a>
                                                                   </h6>
                                                             </div>
                                                              <div class="ps-2">
                                                                   <h6 class="text-truncate">
-                                                                  Seller's Email: <p class="mb-2"><i class="fa fa-envelope me-3" > </i> <a href="mailto: {{ seller_email }}">{{ seller_email }}</a></p>
+                                                                  Seller's Email: <p class="mb-2"><i class="fa fa-envelope me-3" > </i> <a href="mailto: {{ detail.product_owner.email }}">{{ detail.product_owner.email }}</a></p>
                                                                   </h6>
                                                             </div>
                                                       </div>

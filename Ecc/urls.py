@@ -38,6 +38,7 @@ urlpatterns =[
     path('product/<int:pk>/', views.detail, name='detail'),
     path('sell/', views.Sell,name='sell'),
     path('search/', views.search_view, name='search'),
+    path("footer/",views.footer,name="footer")
 
 ]
 if settings.DEBUG:
