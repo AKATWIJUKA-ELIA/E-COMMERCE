@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser , PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import UserManager
 from PIL import Image
+import random
+import string
 
 class News_letter(models.Model):
     email = models.EmailField(blank=True,default=None)
@@ -49,23 +51,40 @@ class Customers(AbstractBaseUser , PermissionsMixin):
 
      
 class Products(models.Model):
-      product_image = models.ImageField(upload_to='products')
+      product_id = models.CharField(max_length=10, unique=True, primary_key=True, editable=False)
       def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the original image first
-        img = Image.open(self.product_image.path)
-        # Resize or crop the image
-        output_size = (1156, 765)  # Desired size
-        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
- # Save the modified image back to the same path
-        img.save(self.product_image.path)
-      product_id = models.AutoField(primary_key=True,unique=True)
+        # Assign a random string only if product_id is not already set
+        if not self.product_id:
+            while True:
+                random_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))  # 10-character random string
+                if not Products.objects.filter(product_id=random_id).exists():  # Ensure uniqueness
+                    self.product_id = random_id
+                    break
+        super().save(*args, **kwargs)
+
       product_name = models.CharField(max_length=255)
       product_price = models.DecimalField(max_digits=100, decimal_places=2)
       product_description = models.CharField(max_length=255)
       product_cartegory = models.CharField(max_length=255,default='breakfast')
       product_condition = models.CharField(max_length=255,default='None')
       product_owner = models.ForeignKey(to=Customers,on_delete=models.CASCADE,default=None)
-      
+
+class Upload_Images(models.Model):
+        product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
+        product_image = models.ImageField(upload_to='products')
+        def save(self, *args, **kwargs):
+                if not self.product_image.name.endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                        raise ValueError('Only image files are allowed')
+                
+                else:
+                        super().save(*args, **kwargs)  # Save the original image first
+                        img = Image.open(self.product_image.path)
+                        # Resize or crop the image
+                        output_size = (1156, 765)  # Desired size
+                        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
+                        # Save the modified image back to the same path
+                        img.save(self.product_image.path)
+        
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True, unique=True)
     cart_user = models.ForeignKey(to=Customers, on_delete=models.CASCADE)  # Link each cart to a customer (user)

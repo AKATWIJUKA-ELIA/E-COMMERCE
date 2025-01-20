@@ -81,6 +81,21 @@
             </div>
         </div>
         {% endif %}
+        <div class="row">
+                <div class="col text-center wow fadeInUp" data-wow-delay="0.1s">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert" style="text-align: center; background-color: rgb(171, 188, 188);">
+                        <strong>Info</strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                   
+                </div>
+            </div>
  
             <div class="container my-5 mb-5"  id="AddProductModal" >
                   <div class="row  ">
@@ -145,13 +160,13 @@
                                                                         <label for="price">price</label>
                                                                         </div>
                                                                         
-                                    
+                                                                
                                                                         <div class="form-floating my-4">
-                                                                        <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+                                                                        <input type="file" name="images" id="images"  class="form-control" placeholder="Images"  multiple  required>
                                     
-                                                                        <label for="image">Image</label>
+                                                                        <label for="images">Upload up to 5 images</label>
                                                                         </div>
-                                    
+                                                
                                                                         <button type="submit" class="btn btn-dark custom-btn form-control   mt-1"  style="width: 150px; color: chocolate;margin-left: 40%;" >
                                                                         Post product
                                                                         </button>
@@ -171,5 +186,14 @@
                         </div>
         </div>
         {% include 'footer.html' %}
+        <script>
+    const maxFiles = 5;
+    document.getElementById('images').addEventListener('change', function() {
+        if (this.files.length > maxFiles) {
+            alert(`You can only upload up to ${maxFiles} images.`);
+            this.value = ''; // Clear the selected files
+        }
+    });
+</script>
 </body>
 </html>

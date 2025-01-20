@@ -172,7 +172,7 @@
                                     {% if data %}
                                     {% for instance in data %}
                                     <div class="carousel-item">
-                                          <img class="w-100" src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" height="400" alt="Image">
+                                          <img class="w-100" src="{{ MEDIA_URL }}{{ instance.images.first.product_image }}" height="400" alt="Image">
                                           <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                           <div class="p-3" style="max-width: 700px;">
                                                 <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">Amazima Restaurant</h1> -->
@@ -224,7 +224,7 @@
 
                                                 <div class="position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
                                                       <a href="{% url 'detail' instance.pk %}">
-                                                      <img class="img-fluid" src="{{ MEDIA_URL }}{{ instance.product_image }}" width="300" height="200" alt="food">
+                                                      <img class="img-fluid" src="{{ MEDIA_URL }}{{ product_image }}" width="300" height="200" alt="food">
                                                       </a>
                                                 </div>
 
@@ -254,19 +254,21 @@
 
                                                 <div class="position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
                                                       <a href="{% url 'detail' instance.pk %}">
-                                                      <img class="img-fluid" src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" width="300" height="200" alt="food">
+                                                      {% if instance.images.all %}
+                                                      <img class="img-fluid" src="{{ MEDIA_URL }}{{ instance.images.first.product_image}}" width="300" height="200" alt="food">
+                                                      {% endif %}
                                                       </a>
                                                 </div>
 
                                                 <div class="p-1">
                                                       <div class="d-flex  justify-content-center text-center ">
-                                                            <h5 class="mb-0 ">{{instance.fields.product_name}}</h5>
+                                                            <h5 class="mb-0 ">{{instance.product_name}}</h5>
 
                                                       </div>
 
                                                       <div class="d-flex flex-column justify-content-between">
-                                                                <p class="text-body "> {{ instance.fields.product_description|truncatechars:30 }}</p>
-                                                                 <p class=" px-4" > Ushs: {{ instance.fields.product_price }} </p>
+                                                                <p class="text-body "> {{ instance.product_description|truncatechars:30 }}</p>
+                                                                 <p class=" px-4" > Ushs: {{ instance.product_price }} </p>
                                                       </div> 
                                                 </div>
 

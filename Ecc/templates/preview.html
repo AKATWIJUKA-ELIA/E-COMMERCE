@@ -115,7 +115,7 @@
                                     </div>
                                     {% endfor %}
                                     {% endif %}
-                                    <h1 class="mb-5">{{detail.product_name}} <span class="text-primary text-uppercase"></span></h1>
+                                    <h1 class="mb-5">{{product.product_name}} <span class="text-primary text-uppercase"></span></h1>
                               </div>
                               </div>
                                
@@ -124,34 +124,46 @@
                               
                                           <div class="row room-item shadow rounded overflow-hidden">
                                                 
-                                                <div class="col position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
-                                                      <img class="img-fluid" src="{{ detail.product_image.url }}" width="300" height="200" alt="food">
-                                                </div>
+                                                <div class="col gap-2 position-relative d-flex flex-column align-items-center" style="height: auto;">
+                                                        <!-- Large Image -->
+                                                        <div class="main-image py-3">
+                                                            <img class="img-fluid" src="{{ product_image.product_image.url }}" alt="{{ product.product_name }}" style="width: 300px; height: 200px; object-fit: cover;">
+                                                        </div>
+                                                        
+                                                        <!-- Small Images -->
+                                                        <div class="image-gallery d-flex justify-content-center gap-2 mt-1">
+                                                            {% for image in All_Images %}
+                                                            <div class="small-image">
+                                                                <img class="img-fluid" src="{{ image.product_image.url }}" alt="{{ product.product_name }}" style="width: 100px; height: 50px; object-fit: cover;">
+                                                            </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
             
                                                 <div class=" col p-4 mt-2">
                                                       <div class="d-flex flex-column justify-content-between gap-2 mb-3">
-                                                            <h5 class="mb-0 text-start ">{{detail.product_name}}</h5>
+                                                            <h5 class="mb-0 text-start ">{{product.product_name}}</h5>
                                                             <div class="ps-2">
                                                                   <h6 class="text-truncate">
-                                                                  Ushs: {{ detail.product_price }} 
+                                                                  Ushs: {{ product.product_price }} 
                                                                   </h6>
-                                                                   <p class="text-body mb-3">{{detail.product_description}}</p>
+                                                                   <p class="text-body mb-3">{{product.product_description}}</p>
                                                             </div>
                                                             <div class="ps-2">
                                                                   <h6 class="text-truncate">
-                                                                  Seller's Contact: <a href='tel:{{ detail.product_owner.phone_number }}' style="text-decoration: none; color: inherit;">{{ detail.product_owner.phone_number }} </a>
+                                                                  Seller's Contact: <a href='tel:{{ product.product_owner.phone_number }}' style="text-decoration: none; color: inherit;">{{ product.product_owner.phone_number }} </a>
                                                                   </h6>
                                                             </div>
                                                              <div class="ps-2">
                                                                   <h6 class="text-truncate">
-                                                                  Seller's Email: <p class="mb-2"><i class="fa fa-envelope me-3" > </i> <a href="mailto: {{ detail.product_owner.email }}">{{ detail.product_owner.email }}</a></p>
+                                                                  Seller's Email: <p class="mb-2"><i class="fa fa-envelope me-3" > </i> <a href="mailto: {{ product.product_owner.email }}">{{ product.product_owner.email }}</a></p>
                                                                   </h6>
                                                             </div>
                                                       </div>
                                                      
                                                       <div class="d-flex justify-content-between">
                                                             
-                                                            <button style="height: 40px" type="button" class="add-cart  btn btn-sm btn-dark rounded py-2 px-4 text-truncate" data-product-id="{{ detail.pk }}">
+                                                            <button style="height: 40px" type="button" class="add-cart  btn btn-sm btn-dark rounded py-2 px-4 text-truncate" data-product-id="{{ product.pk }}">
                                                                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
                                                                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
                                                                   </svg>
