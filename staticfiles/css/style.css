@@ -493,4 +493,10 @@
       color:gold;
       border-bottom: 2px solid gold;
 }
-
+.cartegory_item{
+        background-color: transparent;
+}
+.cartegory_item:hover{
+        cursor: pointer;
+        background-color: rgb(217, 250, 252);
+}

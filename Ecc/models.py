@@ -5,6 +5,10 @@ from django.contrib.auth.models import UserManager
 from PIL import Image
 import random
 import string
+from django.utils.timezone import now
+import os
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class News_letter(models.Model):
     email = models.EmailField(blank=True,default=None)
@@ -68,6 +72,7 @@ class Products(models.Model):
       product_cartegory = models.CharField(max_length=255,default='breakfast')
       product_condition = models.CharField(max_length=255,default='None')
       product_owner = models.ForeignKey(to=Customers,on_delete=models.CASCADE,default=None)
+      Created_At = models.DateTimeField(default=now)
 
 class Upload_Images(models.Model):
         product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
@@ -84,6 +89,13 @@ class Upload_Images(models.Model):
                         img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
                         # Save the modified image back to the same path
                         img.save(self.product_image.path)
+# Signal to delete the image file when the Upload_Images instance is deleted
+@receiver(post_delete, sender=Upload_Images)
+def delete_image_file(sender, instance, **kwargs):
+    if instance.product_image:
+        # Delete the image file from storage
+        if os.path.isfile(instance.product_image.path):
+            os.remove(instance.product_image.path)
         
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True, unique=True)

@@ -75,11 +75,9 @@
       
                           <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                               <div style="margin-top: 0%;" class="col-2">
-                                    <img src="{% static 'images/logo.png' %}" alt="amazima logo"
-                                        height="100px" width="100px"
-                                        style="border-radius: 20px;">
-                    
-                                </div>
+                                        <a href="{% url 'userpage' %}">   <img src="{% static 'images/E-Light.png' %}" alt=" logo"height="100px" width="300px"style="border-radius: 20px;"><a/>
+                
+                                </div> 
         
                                 <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
                                     <a href="userpage.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
@@ -112,7 +110,7 @@
                       </div>
                   </div>
               </div>
-              <!-- Header End -->``
+              <!-- Header End -->
 
       {% if messages %}
                     {% for message in messages %}

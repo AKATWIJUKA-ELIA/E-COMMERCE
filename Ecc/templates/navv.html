@@ -6,8 +6,11 @@
     <meta content="" name="golden">
     <meta content="" name="hotel">
 
-    <!-- Favicon -->
-    <link style="border-radius: 20px;" href="{% static 'images/logo.png' %}" rel="icon">
+     <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="32x32">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="96x96">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{% static 'images/fav4.png' %}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,18 +43,11 @@
                 <div class="col-lg-9">
 
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        {% comment %} <div style="margin-top: 0%;" class="col-2">
-                             <a href="{% url 'userpage' %}"> <img src="{% static 'images/logo.png' %}" alt="amazima restaurant logo"
-                                  height="100px" width="100px"
-                                  style="border-radius: 20px;"></a>
-              
-                          </div> {% endcomment %}
+                                <div style="margin-top: 0%;" class="col-2">
+                                                <a href="{% url 'userpage' %}">   <img src="{% static 'images/E-Light.png' %}" alt=" logo"height="100px" width="300px"style="border-radius: 20px;"><a/>
+                        
+                                </div> 
   
-                          <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light <br>  </h1>
-                              </a>
-                          </div>
                         <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
                style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light</h1>

@@ -10,7 +10,10 @@
     <meta content="" name="light">
 
     <!-- Favicon -->
-    <link style="border-radius: 20px;" href="{% static 'images/logo.png' %}" rel="icon">
+    <link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="32x32">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="96x96">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{% static 'images/fav4.png' %}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,46 +49,7 @@
             <div class="row gx-0 ">
       
                 
-
-                <div class="col-lg-9">
-
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        <div style="margin-top: 0%;" class="col-2">
-                              <img src="{% static 'images/logo.png' %}" alt="Golden view hotel logo"
-                                  height="100px" width="100px"
-                                  style="border-radius: 20px;">
-              
-                          </div>
-  
-                          <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br> </h1>
-                              </a>
-                          </div>
-                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
-                          <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-                          <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
-                            <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                            <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link pointer text-truncate" >Hi-{{ username }}</a>
-                          </div>
-                          <ul class="navbar-nav gap-2 mb-lg-0">
-                            <li class="nav-item">
-                              <a href="{% url 'cart' %}" class="btn btn-sm btn-light rounded py-2 px-2">Cart({{ items_on_cart }})</a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{% url 'log_out' %}" class="btn btn-sm btn-outline-light rounded py-2 px-2">Logout</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                </div>
+{% include 'nav.html'%}
             </div>
         </div>
  
@@ -237,9 +201,8 @@
                                                     <th>description</th>
                                                     <th>Price</th>
                                                     <th>image</th>
-                                                    <th>order status</th>
                                                     <th>date Added</th>
-                                                    <th>payment_status</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             
@@ -250,12 +213,16 @@
                                                 <tr>
                                                     <td>{{ product.pk }}</td>
                                                     <td>{{product.product_name}}</td>
-                                                    <td>{{product.product_description}}</td>
+                                                    <td>{{product.product_description|truncatechars:30}}</td>
                                                     <td>{{ product.product_price }} </td>
-                                                    <td> <img src="{{ MEDIA_URL }}{{ product.product_image }}" width='40' height='40' alt={{product.product_name}}> </td>
-                                                    <td>{{product.order_status}}</td>
-                                                    <td>{{product.order_date}}</td>
-                                                    <td> {{product.payment_status}} <td>
+                                                    {% if product.images.all %}
+                                                    <td> <img src="{{ MEDIA_URL }}{{ product.images.first.product_image }}" width='40' height='40' alt={{product.product_name}}> </td>
+                                                    {% endif %}
+                                                    <td>{{product.Created_At.date}}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary update-btn rounded-3 " data-product-id={{ product.pk }} data-bs-toggle="modal" data-bs-target="#videoModal">Edit</button>
+                                                        <button  class="delete btn btn-danger rounded-3 " data-product-id={{ product.pk }} >Delete</button> 
+                                                  </td>
                                                       
                                                 </tr>
                                                 {% endfor %}
@@ -299,7 +266,31 @@
     <script src="{% static 'js/main.js' %}"></script>
     
     <script>
-      
+      $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+            
+            // Get the product ID from the data attribute of the clicked button
+            var product_id = $(this).data('product-id');
+        
+            $.ajax({
+                type: 'POST',
+                url: '{% url "delete" %}',
+                data: {
+                    product_id: product_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    console.log(json);
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error(errmsg);
+                }
+            });
+
+            location.reload()
+        });  
+
       $(document).on('click', '.add-cart', function(e) {
             e.preventDefault();
             
