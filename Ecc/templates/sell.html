@@ -41,27 +41,27 @@
 
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                         {% comment %} <div style="margin-top: 0%;" class="col-2">
-                             <a href="{% url 'index' %}" > <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
+                             <a href="{% url 'userpage' %}" > <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
                                   height="100px" width="100px"
                                   style="border-radius: 20px;"><a/>
               
                           </div> {% endcomment %}
   
                           <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 3%;">
-                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br>  </h1>
+                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br>  </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                           <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
+                            <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
                             <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
                             <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
                             <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
@@ -81,6 +81,21 @@
             </div>
         </div>
         {% endif %}
+        <div class="row">
+                <div class="col text-center wow fadeInUp" data-wow-delay="0.1s">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert" style="text-align: center; background-color: rgb(171, 188, 188);">
+                        <strong>Info</strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                   
+                </div>
+            </div>
  
             <div class="container my-5 mb-5"  id="AddProductModal" >
                   <div class="row  ">
@@ -103,26 +118,39 @@
                                                                         <div class="form-floating d-flex " style='margin-bottom:10px;' >
                                                                               <input type="text" name="name" id="name"  class="form-control " placeholder="name" required>
                                     
-                                                                              <label for="name">name</label>
+                                                                              <label for="name">Product name</label>
                                                                         </div>
                                     
-                                                                        <div class="form-floating d-flex " style='margin-bottom:10px'>
-                                    
-                                                                              <input type="text" name="cartegory" id="cartegory" class="form-control" placeholder="cartegory" required>
-                                    
-                                                                              <label for="price">cartegory</label>
+                                                                        <div class="form-floating d-flex" style="margin-bottom:10px">
+                                                                                <select name="cartegory" id="cartegory" class="form-control form-select" required>
+                                                                                <option value="" disabled selected>Select cartegory</option>
+                                                                                <option value="vehicles">Vehicles</option>
+                                                                                <option value="electronics">Electronics</option>
+                                                                                <option value="fashion">Fashion</option>
+                                                                                <option value="properties">Properties</option>
+                                                                                <option value="health">Health</option>
+                                                                                <option value="art-and-crafts">Art and Crafts</option>
+                                                                                <option value="accessories">Accessories</option>
+                                                                                <option value="furniture">Furniture</option>
+                                                                                <option value="services">Services</option>
+                                                                                </select>
+                                                                                <label for="cartegory">Cartegory</label>
                                                                         </div>
                                     
                                                                         <div class="form-floating " style='margin-bottom:10px'>
-                                                                              <input type="tel" name="description" id="description"  class="form-control" placeholder="description" required>
+                                                                              <input type="tel" name="description" id="description"  class="form-control" placeholder="describe" required>
                                     
-                                                                              <label for="description">description</label>
+                                                                              <label for="description">describe your item with about five words separated by comma </label>
                                                                         </div>
 
-                                                                        <div class="form-floating" style='margin-bottom:10px'>
-                                                                              <input type="tel" name="condition" id="condition"  class="form-control" placeholder="condition" required>
-                                    
-                                                                              <label for="condition">condition</label>
+                                                                        <div class="form-floating" style="margin-bottom:10px">
+                                                                                <select name="condition" id="condition" class="form-control form-select" required>
+                                                                                <option value="" disabled selected>Select condition</option>
+                                                                                <option value="new">New</option>
+                                                                                <option value="used">Used</option>
+                                                                                <option value="refurbished">Refurbished</option>
+                                                                                </select>
+                                                                                <label for="condition">Condition</label>
                                                                         </div>
                                     
                                                                         <div class="form-floating">
@@ -132,13 +160,13 @@
                                                                         <label for="price">price</label>
                                                                         </div>
                                                                         
-                                    
+                                                                
                                                                         <div class="form-floating my-4">
-                                                                        <input type="file" name="image" id="image"  class="form-control" placeholder="Image" required>
+                                                                        <input type="file" name="images" id="images"  class="form-control" placeholder="Images"  multiple  required>
                                     
-                                                                        <label for="image">Image</label>
+                                                                        <label for="images">Upload up to 5 images</label>
                                                                         </div>
-                                    
+                                                
                                                                         <button type="submit" class="btn btn-dark custom-btn form-control   mt-1"  style="width: 150px; color: chocolate;margin-left: 40%;" >
                                                                         Post product
                                                                         </button>
@@ -158,5 +186,14 @@
                         </div>
         </div>
         {% include 'footer.html' %}
+        <script>
+    const maxFiles = 5;
+    document.getElementById('images').addEventListener('change', function() {
+        if (this.files.length > maxFiles) {
+            alert(`You can only upload up to ${maxFiles} images.`);
+            this.value = ''; // Clear the selected files
+        }
+    });
+</script>
 </body>
 </html>

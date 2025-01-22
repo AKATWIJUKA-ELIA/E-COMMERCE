@@ -35,9 +35,10 @@ urlpatterns =[
     path('Add_Item_to_cart/', views.Add_Item_to_cart,name="Add_Item_to_cart"),
     path('payments/', views.payments,name="payments"),
     path('Send_email/', views.Send_email,name="Send_email"),
-    path('product/<int:pk>/', views.detail, name='detail'),
+    path('product/<str:pk>/', views.detail, name='detail'),
     path('sell/', views.Sell,name='sell'),
     path('search/', views.search_view, name='search'),
+    path("footer/",views.footer,name="footer")
 
 ]
 if settings.DEBUG:

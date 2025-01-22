@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractBaseUser , PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import UserManager
 from PIL import Image
+import random
+import string
+from django.utils.timezone import now
+import os
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class News_letter(models.Model):
     email = models.EmailField(blank=True,default=None)
@@ -49,29 +55,54 @@ class Customers(AbstractBaseUser , PermissionsMixin):
 
      
 class Products(models.Model):
-      product_image = models.ImageField(upload_to='products')
+      product_id = models.CharField(max_length=10, unique=True, primary_key=True, editable=False)
       def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the original image first
-        img = Image.open(self.product_image.path)
-        # Resize or crop the image
-        output_size = (1156, 765)  # Desired size
-        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
- # Save the modified image back to the same path
-        img.save(self.product_image.path)
-      product_id = models.AutoField(primary_key=True,unique=True)
+        # Assign a random string only if product_id is not already set
+        if not self.product_id:
+            while True:
+                random_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))  # 10-character random string
+                if not Products.objects.filter(product_id=random_id).exists():  # Ensure uniqueness
+                    self.product_id = random_id
+                    break
+        super().save(*args, **kwargs)
+
       product_name = models.CharField(max_length=255)
       product_price = models.DecimalField(max_digits=100, decimal_places=2)
       product_description = models.CharField(max_length=255)
       product_cartegory = models.CharField(max_length=255,default='breakfast')
       product_condition = models.CharField(max_length=255,default='None')
+      product_owner = models.ForeignKey(to=Customers,on_delete=models.CASCADE,default=None)
+      Created_At = models.DateTimeField(default=now)
 
-      
+class Upload_Images(models.Model):
+        product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
+        product_image = models.ImageField(upload_to='products')
+        def save(self, *args, **kwargs):
+                if not self.product_image.name.endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                        raise ValueError('Only image files are allowed')
+                
+                else:
+                        super().save(*args, **kwargs)  # Save the original image first
+                        img = Image.open(self.product_image.path)
+                        # Resize or crop the image
+                        output_size = (1156, 765)  # Desired size
+                        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
+                        # Save the modified image back to the same path
+                        img.save(self.product_image.path)
+# Signal to delete the image file when the Upload_Images instance is deleted
+@receiver(post_delete, sender=Upload_Images)
+def delete_image_file(sender, instance, **kwargs):
+    if instance.product_image:
+        # Delete the image file from storage
+        if os.path.isfile(instance.product_image.path):
+            os.remove(instance.product_image.path)
+        
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True, unique=True)
     cart_user = models.ForeignKey(to=Customers, on_delete=models.CASCADE)  # Link each cart to a customer (user)
     cart_product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='cart_items')  # Link each cart to a product
     quantity = models.PositiveIntegerField(default=1)  # Quantity of the product in the cart
-    cart_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Total price for this cart item
+    cart_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)  # Total price for this cart item
 
     def save(self, *args, **kwargs):
         # Update cart amount based on product price and quantity

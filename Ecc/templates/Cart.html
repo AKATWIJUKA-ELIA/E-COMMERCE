@@ -1,16 +1,19 @@
-Light E-Shop{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Amazima | Cart</title>
+    <title>E-Light | Cart</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="golden">
-    <meta content="" name="hotel">
+    <meta content="" name="E-Light">
+    <meta content="" name="E-Light">
 
     <!-- Favicon -->
-    <link style="border-radius: 20px;" href="{% static 'images/logo.png' %}" rel="icon">
+    <link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="32x32">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="96x96">
+<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{% static 'images/fav4.png' %}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,52 +47,7 @@ Light E-Shop{% load static %}
         <!-- Spinner End -->
         {% comment %} ========N AV IGATION BAR {% endcomment %}
 
-        <div class="container-fluid bg-dark px-0">
-            <div class="row gx-0 ">
-      
-                
-
-                <div class="col-lg-9">
-
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        <div style="margin-top: 0%;" class="col-2">
-                              <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
-                                  height="100px" width="100px"
-                                  style="border-radius: 20px;">
-              
-                          </div>
-  
-                          <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br> </h1>
-                              </a>
-                          </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
-                          <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-                          <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link " onclick="home">Home</a>
-                            <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                            <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link pointer text-truncate" >Hi-{{ username }}</a>
-                          </div>
-                          <ul class="navbar-nav mb-lg-0">
-                            <li class="nav-item">
-                              <a href="#" class="btn btn-sm btn-light rounded py-2 px-4">Cart({{ items_on_cart }})</a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-light rounded py-2 px-4">Logout</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                </div>
-            </div>
-        </div>
+       {% include 'nav.html'%}
  
         
 

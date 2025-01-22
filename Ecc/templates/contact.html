@@ -54,29 +54,27 @@
 
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                         {% comment %} <div style="margin-top: 0%;" class="col-2">
-                             <a href="{% url 'index' %}" > <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
+                             <a href="{% url 'userpage' %}" > <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
                                   height="100px" width="100px"
                                   style="border-radius: 20px;"><a/>
               
                           </div> {% endcomment %}
   
                           <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 3%;">
-                              <a href="{% url 'index' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop <br>  </h1>
+                              <a href="{% url 'userpage' %}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
+                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light <br>  </h1>
                               </a>
                           </div>
-                        <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
+                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
                           <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary ">Light E-Shop</h1>
+               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> E-Light</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
                           <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'index' %}" class="nav-item nav-link" onclick="home">Home</a>
-                            <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
-                            <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
+                            <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
                             <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
                             {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
                           </div>
@@ -116,7 +114,7 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Contact</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'userpage' %}">Home</a></li>
                             <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
                         </ol>
                     </nav>

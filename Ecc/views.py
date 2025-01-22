@@ -2,13 +2,13 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import timedelta, timezone
 from django.utils.timezone import now
 from django.shortcuts import render, redirect,get_object_or_404
-from Ecc.models import News_letter, Customers,Products,Orders,Cart,Gallery
+from Ecc.models import News_letter, Customers,Products,Orders,Cart,Gallery,Upload_Images
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.core import serializers
 from django.http import JsonResponse
-from django.db.models import Sum
+from django.db.models import Sum 
 from django.db import transaction
 import requests
 import uuid
@@ -118,25 +118,19 @@ def index(request):
 def userpage(request):
 #       if request.user.is_authenticated:
             try:
-                  data = serializers.serialize("python",Products.objects.all())
-                  lunch = serializers.serialize("python",Products.objects.filter(product_cartegory='Lunch'))
-                  salad = serializers.serialize("python",Products.objects.filter(product_cartegory='salad'))
-                  # data = Products.objects.all()
+                  data = Products.objects.prefetch_related('images').all()
                   if request.user.is_authenticated:
                           items_on_cart =  Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
                   else:
                           items_on_cart =''
             except Cart.DoesNotExist:
                   context = {'data':data,
-
                         'username':request.user.username[:5]
                         }
                   return  render(request, 'userpage.html',context)
             finally:
                   # items_on_cart = Cart.objects.count()
                   context = {'data':data,
-                             'lunch':lunch,
-                             'salad':salad,
                              'MEDIA_URL': settings.MEDIA_URL,
                              'items_on_cart':items_on_cart,
                               'username':request.user.username[:5]
@@ -153,6 +147,7 @@ def profile(request):
             user = Customers.objects.get(Customer_id=request.user.Customer_id)
             items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
             orders = Orders.objects.filter(order_user=user)
+            products = Products.objects.filter(product_owner=user)
             # print(address)
             context={
                   'email':email,
@@ -161,6 +156,7 @@ def profile(request):
                   'username':request.user.username[:5],
                   'items_on_cart':items_on_cart,
                   'orders':orders,
+                  'products':products,
             }
 
             return render(request, 'profile.html', context=context)
@@ -798,8 +794,16 @@ def Send_email(request):
       return  render(request,'contact.html')
 
 def detail(request, pk):
-      detail = Products.objects.get(product_id=pk)
-      return render(request, 'preview.html', {'detail': detail,'username':request.user.username[:5],'seller_email':request.user.email, 'seller_contact':request.user.phone_number})
+      product = Products.objects.get(product_id=pk)
+      product_image = Upload_Images.objects.filter(product = product )[0]
+      All_Images = Upload_Images.objects.filter(product = product )
+      print(All_Images)
+      context={'product': product,
+               "All_Images":All_Images,
+               "product_image":product_image,
+               'username':request.user.username[:5]}
+      print(product_image)
+      return render(request, 'preview.html',context=context )
 
 def gallery(request):
       if request.method =="POST":
@@ -917,24 +921,49 @@ def SendEmail(server_email,email_receiver,subject,body):
 
 def Sell(request):
       if request.user.is_authenticated:
+            name = request.user.username
+            customer = Customers.objects.get(username=name)
             if request.method == "POST":
-                        product_name = request.POST['name']
-                        product_price = request.POST['price']
-                        product_cartegory = request.POST['cartegory']
-                        product_condition = request.POST['condition']
-                        product_description = request.POST['description']
-                        product_image = request.FILES.get('image')
-                        product = Products.objects.create(product_name=product_name,
-                                                        product_price=product_price,product_cartegory=product_cartegory,
-                                                        product_condition=product_condition,product_description=product_description,
-                                                        product_image=product_image)
-                        product.save()
+                        product_data={"product_name":request.POST['name'],
+                                                        "product_price":request.POST['price'],
+                                                        "product_cartegory":request.POST['cartegory'],
+                                                        "product_condition":request.POST['condition'],
+                                                        "product_description":request.POST['description'],
+                                                        "product_owner":customer
+                                                        }
+                        product_images = request.FILES.getlist("images")
+                        
+                        try:
+                                create_product_with_images(product_data,product_images)
+                        except ValueError as e:  #Incase A User Uploads a non-Image file
+                                messages.error(request,f"Error ! !  !: {str(e)}", )
+                                return redirect('sell')
+                        except Exception as e:
+                                messages.error(request,"Error ! !  !: Only Image Files are Accepted", )
+                                print({str(e)})
+                                return redirect('sell')
                         messages.info(request,"product added successfully")
                         return redirect('sell')
       else:
               return redirect('sign_in')
                 
       return render(request, 'sell.html',{"username":request.user.username[:5]})
+
+def create_product_with_images(product_data, image_files):
+        # Start a transaction
+        with transaction.atomic():
+            # Save the product
+            product = Products.objects.create(**product_data)
+            product.save()
+
+            # Save related images
+            for image_file in image_files:
+                NewImage = Upload_Images(product=product, product_image=image_file)
+                NewImage.save()  # Save and process each image
+
+            # If all succeeds, the transaction will commit automatically
+        # return {"success": "Product and images saved successfully!"}
+
 
 def search_view(request):
     query = request.GET.get('q')  # Get the search term from the URL query parameter
@@ -943,4 +972,10 @@ def search_view(request):
         results = Products.objects.filter(
             Q(product_name__icontains=query) | Q(product_description__icontains=query) | Q(product_cartegory__icontains=query)  # Adjust fields as needed
         )
-    return render(request, 'search_results.html', {'results': results, 'query': query})
+        print(results)
+    return render(request, 'userpage.html', {'results': results, 'query': query,"username":request.user.username})
+
+def footer(request):
+        current_year = now()
+        print(current_year)
+        return render(request, 'footer.html',{"current_year":current_year})
