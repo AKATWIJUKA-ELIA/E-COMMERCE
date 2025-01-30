@@ -70,6 +70,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://e-light.onrender.com",
+]
 
 AUTH_USER_MODEL = 'Ecc.Customers'
 
