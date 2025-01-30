@@ -32,15 +32,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9mj8q%uv0&+pv%dcdb275#k_qa30#^5s1=em5)d$is%p(yp3b3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
                   'lightsuccess.pythonanywhere.com',
+                  'e-light.onrender.com/',
                   '127.0.0.1',
-                  '10.136.128.220',
-                  '10.5.1.201',
-                  '192.168.75.151',
-                  '*'
                   
                  ]
 
@@ -80,7 +77,7 @@ AUTH_USER_MODEL = 'Ecc.Customers'
 ROOT_URLCONF = 'Eccommerce.urls'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"  # Replace with your SMTP server
