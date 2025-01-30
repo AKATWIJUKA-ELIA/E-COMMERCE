@@ -36,7 +36,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
                   'lightsuccess.pythonanywhere.com',
-                  'e-light.onrender.com/',
+                  'e-light.onrender.com',
                   '127.0.0.1',
                   
                  ]
