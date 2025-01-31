@@ -9,6 +9,7 @@ from django.utils.timezone import now
 import os
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from cloudinary.models import CloudinaryField
 
 class News_letter(models.Model):
     email = models.EmailField(blank=True,default=None)
@@ -75,27 +76,35 @@ class Products(models.Model):
       Created_At = models.DateTimeField(default=now)
 
 class Upload_Images(models.Model):
-        product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
-        product_image = models.ImageField(upload_to='products')
-        def save(self, *args, **kwargs):
-                if not self.product_image.name.endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                        raise ValueError('Only image files are allowed')
-                
-                else:
-                        super().save(*args, **kwargs)  # Save the original image first
-                        img = Image.open(self.product_image.path)
-                        # Resize or crop the image
-                        output_size = (1156, 765)  # Desired size
-                        img = img.resize(output_size, Image.Resampling.LANCZOS)  # Resize with high quality
-                        # Save the modified image back to the same path
-                        img.save(self.product_image.path)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
+    product_image = CloudinaryField('image', blank=True,transformation=[
+            {'width': 1156, 'height': 765, 'crop': 'fill'}  # Resize & crop to fit
+        ], null=True)  # Cloudinary handles storage
+#     def __str__(self):
+        # return f"Image for {self.product.name}"
+
+#     def save(self, *args, **kwargs):
+#         # Check if the uploaded file is a valid image
+#         if self.product_image and hasattr(self.product_image, 'file'):
+#             allowed_types = ['image/jpeg', 'image/png', 'image/gif']
+#             if self.product_image.file.content_type not in allowed_types:
+#                 raise ValueError('Only JPG, JPEG, PNG, and GIF image files are allowed')
+
+#         # Save the image to Cloudinary
+#         super().save(*args, **kwargs)  
+
+#     def get_resized_image_url(self):
+#         """Returns a resized image URL using Cloudinary transformations."""
+#         if self.product_image:
+#             return f"{self.product_image.url}?w=1156&h=765&c=fill&q=80"  # Resize & compress
+#         return ""
 # Signal to delete the image file when the Upload_Images instance is deleted
-@receiver(post_delete, sender=Upload_Images)
-def delete_image_file(sender, instance, **kwargs):
-    if instance.product_image:
-        # Delete the image file from storage
-        if os.path.isfile(instance.product_image.path):
-            os.remove(instance.product_image.path)
+# @receiver(post_delete, sender=Upload_Images)
+# def delete_image_file(sender, instance, **kwargs):
+#     if instance.product_image:
+#         # Delete the image file from storage
+#         if os.path.isfile(instance.product_image.path):
+#             os.remove(instance.product_image.path)
         
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True, unique=True)
