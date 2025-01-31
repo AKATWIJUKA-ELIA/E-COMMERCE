@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # import environ
 # import dj_database_url
 
@@ -32,12 +35,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9mj8q%uv0&+pv%dcdb275#k_qa30#^5s1=em5)d$is%p(yp3b3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
                   'lightsuccess.pythonanywhere.com',
                   'e-light.onrender.com',
                   '127.0.0.1',
+                  '10.5.1.201'
                   
                  ]
 
@@ -51,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'Ecc',
 ]
 
@@ -79,8 +85,21 @@ AUTH_USER_MODEL = 'Ecc.Customers'
 
 ROOT_URLCONF = 'Eccommerce.urls'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'https://res.cloudinary.com/dukoxursb/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+cloudinary.config(
+    cloud_name="dukoxursb",  # Replace with your Cloudinary cloud name
+    api_key="161237469388147",  # Replace with your Cloudinary API key
+    api_secret="pa6suf_jaavaI0GCZkjvJGTxsR8",  # Replace with your Cloudinary API secret
+)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE ={
+        'CLOUD_NAME': 'dukoxursb',
+        'API_KEY': '161237469388147',
+        'API_SECRET': 'pa6suf_jaavaI0GCZkjvJGTxsR8',
+        'allowed_formats': ['jpg', 'jpeg', 'png', 'gif'],
+}
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"  # Replace with your SMTP server

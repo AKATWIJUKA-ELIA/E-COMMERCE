@@ -1,3 +1,4 @@
+import cloudinary.uploader
 from django.views.decorators.csrf import csrf_exempt
 from datetime import timedelta, timezone
 from django.utils.timezone import now
@@ -322,14 +323,15 @@ def update(request):
                         product.save()
                 else:
                         product.product_cartegory = product.product_cartegory
-                if request.FILES.get('image'):
-                        product.product_image = request.FILES.get('image')
-                        product.save()
+                        # UPDATING A PRODUCT IMAGE/S
+                if request.FILES.getlist("image"):
+                        product_images = request.FILES.getlist("image")
+                        Update_product_with_images( product, product_images,)
                 else:
-                        product.product_image = product.product_image
-                product.save()
+                        pass
+                
                 messages.info(request, 'product updated successfully')
-      return redirect('admin')
+      return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def service(request):
@@ -958,6 +960,20 @@ def create_product_with_images(product_data, image_files):
 
             # Save related images
             for image_file in image_files:
+                NewImage = Upload_Images(product=product, product_image=image_file)
+                NewImage.save()  # Save and process each image
+
+            # If all succeeds, the transaction will commit automatically
+        # return {"success": "Product and images saved successfully!"}
+def Update_product_with_images(product, image_files,):
+        # Start a transaction
+        with transaction.atomic():
+            # delete the old product
+            oldImage = Upload_Images.objects.filter(product=product)
+            oldImage.delete()
+            # Save related images
+            for image_file in image_files:
+               
                 NewImage = Upload_Images(product=product, product_image=image_file)
                 NewImage.save()  # Save and process each image
 
