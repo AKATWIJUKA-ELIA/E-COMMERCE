@@ -862,7 +862,7 @@ def ForgotPassword(request):
                   customer.reset_token_expires = now() +timedelta(minutes=10)
                   customer.save()
                   subject = "Password Reset Email"
-                  link = "https://lightsuccess.pythonanywhere.com/reset-password?token={}".format(reset_token)
+                  link = "https://e-light.onrender.com/reset-password?token={}".format(reset_token)
                   content = f'<a href="{link}">Click here to Reset your password</a>'
                   email_receiver = email
                   body =  "Hello {}  \n your password reset link is {} \n Your token will expire in 10 minutes".format(CustomerName,content)
