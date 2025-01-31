@@ -79,9 +79,13 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 wow w-75 fadeInUp" data-wow-delay="0.1s">
                     <div class="row room-item shadow rounded overflow-hidden">
+                    
                         <div class="col position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
-                            <img class="img-fluid" src="{{ instance.cart_product.product_image.url }}" width="300" height="200" alt="food">
+                        <a href="{% url 'detail' instance.cart_product.product_id %}">
+                            <img class="img-fluid" src="{{ Single_Image.product_image.url }}" width="300" height="200" alt="food">
+                                </a>
                         </div>
+                        
                         <div class="col p-4 mt-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">{{ instance.cart_product.product_name }}</h5>

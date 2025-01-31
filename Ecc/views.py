@@ -410,8 +410,10 @@ def cart(request):
             try:
                   user = Customers.objects.get(Customer_id=request.user.Customer_id)
                   cart_item =  Cart.objects.all().filter(cart_user=user)
-
-                  print(cart_item)
+                  product = cart_item.get().cart_product
+                  print(product)
+                  Single_Image = Upload_Images.objects.filter(product=product)[0]
+                  print(Single_Image)
             except Cart.DoesNotExist:
                   messages.info(request, 'your cart is empty')
                   return render(request, 'cart.html', )
@@ -425,6 +427,7 @@ def cart(request):
                   'cart_item':cart_item,
                   'username':name,
                   'total':total_sum,
+                  'Single_Image':Single_Image
                   }
       return render(request, 'Cart.html', context=context)
 
@@ -437,27 +440,23 @@ def cart(request):
 #============================================######
 def Add_Item_to_cart(request):
       if request.user.is_authenticated:
-        name = request.user
-        customer = Customers.objects.get(username=name)
-
-        if request.POST.get('action') == 'post':
-            product_id = int(request.POST.get('product_id'))
-            product = Products.objects.get(product_id=product_id)
-
-            # Check if the product is already in the cart
-            if Cart.objects.filter(cart_user=customer, cart_product=product).exists():
-                messages.info(request, 'Product already added to cart, check your cart to increase the quantity')
-                return render(request, 'userpage.html')
-            else:
-                # Create a new cart item
-                newcart = Cart.objects.create(
-                    cart_user=customer,
-                    cart_product = product
-                )
-
-                newcart.save()
-                messages.success(request, 'Product successfully added to cart')
-                return redirect('userpage')
+              name = request.user
+              customer = Customers.objects.get(username=name)
+              if request.POST.get('action') == 'post':
+                      product_id = request.POST.get('product_id')
+                      product = Products.objects.get(product_id=product_id)
+                        # Check if the product is already in the cart
+                      if Cart.objects.filter(cart_user=customer, cart_product=product).exists():
+                              messages.info(request, 'Product already added to cart, check your cart to increase the quantity')
+                              return redirect(request.META.get('HTTP_REFERER', '/'))
+                      else:
+                              newcart = Cart.objects.create(
+                                      cart_user=customer,
+                                      cart_product = product
+                                      )
+                              newcart.save()
+                              messages.success(request, 'Product successfully added to cart')
+                              return redirect(request.META.get('HTTP_REFERER', '/'))
       else:
             return render(request, 'sign_in.html')
 
@@ -800,9 +799,11 @@ def detail(request, pk):
       product_image = Upload_Images.objects.filter(product = product )[0]
       All_Images = Upload_Images.objects.filter(product = product )
       print(All_Images)
+      items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
       context={'product': product,
                "All_Images":All_Images,
                "product_image":product_image,
+               'items_on_cart':items_on_cart,
                'username':request.user.username[:5]}
       print(product_image)
       return render(request, 'preview.html',context=context )
