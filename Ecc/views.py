@@ -410,24 +410,21 @@ def cart(request):
             try:
                   user = Customers.objects.get(Customer_id=request.user.Customer_id)
                   cart_item =  Cart.objects.all().filter(cart_user=user)
-                  product = cart_item.get().cart_product
-                  print(product)
-                  Single_Image = Upload_Images.objects.filter(product=product)[0]
-                  print(Single_Image)
+                #   print(cart_item)
+                #   for item in cart_item:
+                #           NewInstance = item.cart_product.images.all()
+                #           print(NewInstance)
+                
             except Cart.DoesNotExist:
                   messages.info(request, 'your cart is empty')
                   return render(request, 'cart.html', )
-
-
-
-
 
             items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
             context = {'items_on_cart':items_on_cart,
                   'cart_item':cart_item,
                   'username':name,
                   'total':total_sum,
-                  'Single_Image':Single_Image
+                   'MEDIA_URL': settings.MEDIA_URL,
                   }
       return render(request, 'Cart.html', context=context)
 

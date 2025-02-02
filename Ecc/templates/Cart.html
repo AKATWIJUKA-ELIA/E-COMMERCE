@@ -82,7 +82,9 @@
                     
                         <div class="col position-relative d-flex justify-content-center align-items-center flex-column" style="height: 200px;">
                         <a href="{% url 'detail' instance.cart_product.product_id %}">
-                            <img class="img-fluid" src="{{ Single_Image.product_image.url }}" width="300" height="200" alt="food">
+                           {% if instance.cart_product.images.all %}
+                            <img class="img-fluid" src="{{ MEDIA_URL }}{{ instance.cart_product.images.first.product_image}}" width="300" height="200" alt="food">
+                               {% endif  %}
                                 </a>
                         </div>
                         
