@@ -796,7 +796,10 @@ def detail(request, pk):
       product_image = Upload_Images.objects.filter(product = product )[0]
       All_Images = Upload_Images.objects.filter(product = product )
       print(All_Images)
-      items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
+      if request.user.is_authenticated:
+              items_on_cart = Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
+      else:
+              items_on_cart = ''
       context={'product': product,
                "All_Images":All_Images,
                "product_image":product_image,
