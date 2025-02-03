@@ -14,56 +14,8 @@
         </div>
         <!-- Spinner End -->
         {% comment %} ========N AV IGATION BAR {% endcomment %}
-        {% if request.user.is_authenticated %}
+    
        {% include 'nav.html'%}
-       {% else %}
-        <div class="container-fluid bg-dark px-0">
-            <div class="row gx-0 ">
-
-                <div class="col-lg-9">
-
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        <div style="margin-top: 0%;" class="col-2">
-                              <img src="{% static 'images/logo.png' %}" alt="Amazima logo"
-                                  height="100px" width="100px"
-                                  style="border-radius: 20px;">
-              
-                          </div>
-  
-                          <div  class="col-lg-3 bg-dark d-none d-lg-block" style="margin-left: 0%;">
-                              <a href="userpage.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center ">
-                                  <h1 style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light<br> </h1>
-                              </a>
-                          </div>
-                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
-                          <h1 
-               style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase"> E-Light</h1>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-                          <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'userpage' %}" class="nav-item nav-link " onclick="home">Home</a>
-                            <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                             
-                            {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
-                          </div>
-                          <ul class="navbar-nav mb-lg-0">
-                            <li class="nav-item">
-                              <a href="{% url 'sign_in' %}" class="btn btn-sm btn-light rounded py-2 px-4">LogIn</a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-light rounded py-2 px-4">SignUp</a>
-                            </li>
-                          </ul>
-                          
-                        </div>
-                      </nav>
-                </div>
-            </div>
-        </div>
-         {% endif %}
  
         
         <div class="container-fluid">
