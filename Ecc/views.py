@@ -240,7 +240,7 @@ def admin_login(request):
 
 def admin(request):
       if request.user.is_authenticated:
-            data = serializers.serialize("python",Products.objects.all() )
+            data = Products.objects.all()
 
             orders = Orders.objects.all()
             available_products = Products.objects.count()

@@ -172,7 +172,9 @@
                                                     <td>{{order.cart.cart_product.product_name}}</td>
                                                     <td>{{order.cart.cart_product.product_description}}</td>
                                                     <td>{{ order.cart.cart_product.product_price }} </td>
-                                                    <td> <img src="{{ MEDIA_URL }}{{ order.cart.cart_product.product_image }}" width='40' height='40' alt={{order.cart.cart_product.product_name}}> </td>
+                                                    {% if order.cart.cart_product.images.all %}
+                                                    <td> <img src="{{ MEDIA_URL }}{{ order.cart.cart_product.images.first.product_image }}" width='40' height='40' alt={{order.cart.cart_product.product_name}}> </td>
+                                                    {% endif %}
                                                     <td>{{order.order_status}}</td>
                                                     <td>{{order.order_date}}</td>
                                                     <td> {{order.payment_status}} <td>

@@ -160,10 +160,10 @@
                     {% for instance in data %}
                     <tr>
                         <td>{{ instance.pk }}</td>
-                        <td>{{instance.fields.product_name}}</td>
-                        <td>{{instance.fields.product_description}}</td>
-                        <td>{{ instance.fields.product_price }}shs </td>
-                        <td> <img src="{{ MEDIA_URL }}{{ instance.fields.product_image }}" width='40' height='40' alt={{instance.fields.product_name}}> </td>
+                        <td>{{instance.product_name}}</td>
+                        <td>{{instance.product_description}}</td>
+                        <td>{{ instance.product_price }}shs </td>
+                        <td> <img src="{{ MEDIA_URL }}{{ instance.images.first.product_image }}" width='40' height='40' alt={{instance.fields.product_name}}> </td>
                         <td>
                             <button class="btn btn-primary update-btn " data-product-id={{ instance.pk }} data-bs-toggle="modal" data-bs-target="#videoModal">Edit</button>
                             <button data-product-id={{ instance.pk }} class="delete btn btn-danger">Delete</button>
