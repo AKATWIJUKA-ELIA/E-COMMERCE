@@ -38,7 +38,8 @@ urlpatterns =[
     path('product/<str:pk>/', views.detail, name='detail'),
     path('sell/', views.Sell,name='sell'),
     path('search/', views.search_view, name='search'),
-    path("footer/",views.footer,name="footer")
+    path("footer/",views.footer,name="footer"),
+    path("approve/",views.approve,name='approve')
 
 ]
 if settings.DEBUG:

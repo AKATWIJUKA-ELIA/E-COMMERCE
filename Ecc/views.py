@@ -119,7 +119,7 @@ def index(request):
 def userpage(request):
 #       if request.user.is_authenticated:
             try:
-                  data = Products.objects.prefetch_related('images').all()
+                  data = Products.objects.prefetch_related('images').filter(Approved=True)
                   if request.user.is_authenticated:
                           items_on_cart =  Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
                   else:
@@ -296,7 +296,7 @@ def delete(request):
             product = Products.objects.get(product_id=product_id)
             product.delete()
             messages.info(request,  'Product deleted successfully')
-            return redirect('admin')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def update(request):
@@ -677,8 +677,8 @@ def sign_up(request):
                         messages.success(request, "Your account has been successfully created you can now log in to you account login")
                         server_email = 'eliaakjtrnq@gmail.com'
                         email_receiver=email
-                        subject = "WELCOME to amazima restaurant.."
-                        body = f"Dear {username},\n\n Welcome to our website.\n\nBest regards,\n\nAmazima Restaurant"
+                        subject = "WELCOME "
+                        body = f"Dear {username},\n\n We  are Happy to see you join us at e-light Market \n\nWith our B2B Platfrom you can upload your products and make them accessible to a wide range of potential Buyers who in term can connect and do business with you,\n thanks for joining us We are Happy to have you part of this Economic Journey\n Regards \n e-light"
                         SendEmail(server_email,email_receiver,subject,body)
                         return redirect('sign_in')
 
@@ -745,7 +745,7 @@ def news_letter(request):
                   messages.info(request, "Thank you for Subscribing")
             return render(request,'userpage.html')
 
-# =============S E N D   AN   E M A I L==========
+# =============S E N D   AN   E M A I L FROM CONTACT SECTION==========
 def Send_email(request):
       if request.user.is_authenticated:
             try:
@@ -926,6 +926,7 @@ def Sell(request):
       if request.user.is_authenticated:
             name = request.user.username
             customer = Customers.objects.get(username=name)
+            email = customer.email
             if request.method == "POST":
                         product_data={"product_name":request.POST['name'],
                                                         "product_price":request.POST['price'],
@@ -946,6 +947,8 @@ def Sell(request):
                                 print({str(e)})
                                 return redirect('sell')
                         messages.info(request,"product added successfully")
+                        SendEmail("eliaakjtrnq@gmail.com",'eliaakjtrnq@gmail.com','PRODUCT ADDITION',f"User {name} with email {email}, has added a product please review it so that it can be posted")
+                        SendEmail("eliaakjtrnq@gmail.com",email,'PRODUCT ADDITION',f'Your Product "{request.POST['name']}" Has been Submited and is pending for Approval, Your product will be posted once it has been approved and you will receive a comfirmation email \n Thanks for Advertising with Us \n \n e-light' )
                         return redirect('sell')
       else:
               return redirect('sign_in')
@@ -991,7 +994,14 @@ def search_view(request):
         )
         print(results)
     return render(request, 'userpage.html', {'results': results, 'query': query,"username":request.user.username})
-
+def approve(request):
+        if request.method == 'POST':
+                product_id = request.POST['product_id']
+                product = Products.objects.get(product_id=product_id)
+                product.Approved = True
+                product.save()
+                
+        return redirect(request.META.get('HTTP_REFERER', '/'))
 def footer(request):
         current_year = now()
         print(current_year)
