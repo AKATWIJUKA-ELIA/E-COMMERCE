@@ -41,7 +41,7 @@ import subprocess
 #         self.cart = cart
 #     def add(self, product):
 #           pass
-
+site_email = 'eliaakjtrnq@gmail.com'
 import logging
 
 logger = logging.getLogger(__name__)
@@ -946,9 +946,9 @@ def Sell(request):
                                 messages.error(request,"Error ! !  !: Only Image Files are Accepted", )
                                 print({str(e)})
                                 return redirect('sell')
-                        messages.info(request,"product added successfully")
-                        SendEmail("eliaakjtrnq@gmail.com",'eliaakjtrnq@gmail.com','PRODUCT ADDITION',f"User {name} with email {email}, has added a product please review it so that it can be posted")
-                        SendEmail("eliaakjtrnq@gmail.com",email,'PRODUCT ADDITION',f'Your Product "{request.POST['name']}" Has been Submited and is pending for Approval, Your product will be posted once it has been approved and you will receive a comfirmation email \n Thanks for Advertising with Us \n \n e-light' )
+                        messages.info(request,"product added successfully, Pending for Admin Approval")
+                        SendEmail(site_email,'eliaakjtrnq@gmail.com','PRODUCT ADDITION',f"User {name} with email {email}, has added a product please review it so that it can be posted")
+                        SendEmail(site_email,email,'PRODUCT ADDITION',f'Your Product "{request.POST['name']}" Has been Submited and is pending for Approval, Your product will be posted once it has been approved and you will receive a comfirmation email \n Thanks for Advertising with Us \n \n e-light' )
                         return redirect('sell')
       else:
               return redirect('sign_in')
@@ -998,10 +998,25 @@ def approve(request):
         if request.method == 'POST':
                 product_id = request.POST['product_id']
                 product = Products.objects.get(product_id=product_id)
+                product_name = product.product_name
+                Product_Owner = product.product_owner
+                Owner_Email = Product_Owner.email
                 product.Approved = True
+                SendEmail(site_email,Owner_Email,'Congratulations', f'{Product_Owner.username}, Your Product {product_name} Has been Posted Successfully \n Thank you for Advertising with Us \n e-light ')
+                product.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+def revoke(request):
+        if request.method == 'POST':
+                product_id = request.POST['product_id']
+                product = Products.objects.get(product_id=product_id)
+                product_name = product.product_name
+                Product_Owner = product.product_owner
+                Owner_Email = Product_Owner.email
+                product.Approved = False
+                SendEmail(site_email,Owner_Email,f'Sorry, {Product_Owner.username}, Your Product {product_name} Could not be posted \n Dont Hesitste to Try Again  \n Thank you for Advertising with Us \n e-light ')
                 product.save()
                 
-        return redirect(request.META.get('HTTP_REFERER', '/'))
 def footer(request):
         current_year = now()
         print(current_year)
