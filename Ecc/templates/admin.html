@@ -162,7 +162,7 @@
                     <tr>
                         <td>{{ instance.pk }}</td>
                         <td>{{instance.product_name}}</td>
-                        <td>{{instance.product_description}}</td>
+                        <td>{{instance.product_description|truncatechars:25}}</td>
                         <td>{{ instance.product_price }}shs </td>
                         <td> <img src="{{ MEDIA_URL }}{{ instance.images.first.product_image }}" width='40' height='40' alt={{instance.fields.product_name}}> </td>
                         <td>
