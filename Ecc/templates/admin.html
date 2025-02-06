@@ -165,7 +165,7 @@
                         <td>{{instance.product_description|truncatechars:25}}</td>
                         <td>{{ instance.product_price }}shs </td>
                         <td> <img src="{{ MEDIA_URL }}{{ instance.images.first.product_image }}" width='40' height='40' alt={{instance.fields.product_name}}> </td>
-                        <td>
+                        <td> 
                             <button class="btn btn-primary update-btn " data-product-id={{ instance.pk }} data-bs-toggle="modal" data-bs-target="#videoModal">Edit</button>
                             <button data-product-id={{ instance.pk }} class="delete btn btn-danger">Delete</button>
                             {% if  instance.Approved %}
