@@ -74,6 +74,7 @@ class Products(models.Model):
       product_condition = models.CharField(max_length=255,default='None')
       product_owner = models.ForeignKey(to=Customers,on_delete=models.CASCADE,default=None)
       Created_At = models.DateTimeField(default=now)
+      Approved = models.BooleanField(blank=True, default=False)
 
 class Upload_Images(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
