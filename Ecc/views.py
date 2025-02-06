@@ -928,6 +928,7 @@ def Sell(request):
             customer = Customers.objects.get(username=name)
             email = customer.email
             if request.method == "POST":
+                        product_Name = request.POST['product_name']
                         product_data={"product_name":request.POST['name'],
                                                         "product_price":request.POST['price'],
                                                         "product_cartegory":request.POST['cartegory'],
@@ -948,7 +949,7 @@ def Sell(request):
                                 return redirect('sell')
                         messages.info(request,"product added successfully, Pending for Admin Approval")
                         SendEmail(site_email,'eliaakjtrnq@gmail.com','PRODUCT ADDITION',f"User {name} with email {email}, has added a product please review it so that it can be posted")
-                        SendEmail(site_email,email,'PRODUCT ADDITION',f'Your Product "{request.POST['name']}" Has been Submited and is pending for Approval, Your product will be posted once it has been approved and you will receive a comfirmation email \n Thanks for Advertising with Us \n \n e-light' )
+                        SendEmail(site_email,email,'PRODUCT ADDITION',f'Your Product "{product_data["product_name"]}" Has been Submited and is pending for Approval, Your product will be posted once it has been approved and you will receive a comfirmation email \n Thanks for Advertising with Us \n \n e-light' )
                         return redirect('sell')
       else:
               return redirect('sign_in')
