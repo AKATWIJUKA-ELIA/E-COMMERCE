@@ -680,6 +680,7 @@ def sign_up(request):
                         subject = "WELCOME "
                         body = f"Dear {username},\n\n We  are Happy to see you join us at e-light Market \n\nWith our B2B Platfrom you can upload your products and make them accessible to a wide range of potential Buyers who in term can connect and do business with you,\n thanks for joining us We are Happy to have you part of this Economic Journey\n Regards \n e-light"
                         SendEmail(server_email,email_receiver,subject,body)
+                        SendEmail(server_email,server_email,'New User Alert',f'A New User with username {username} has Signed Up')
                         return redirect('sign_in')
 
             else:
