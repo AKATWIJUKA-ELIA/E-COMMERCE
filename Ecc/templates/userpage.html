@@ -30,7 +30,7 @@
       {% endif %}
 
         <!-- HERO Start -->
-        <div class="container-fluid  bg-secondary" style="height: 700px;" >
+        <div class="container-fluid  bg-secondary" style="height: 600px;" >
 
                 <div class="row h-100 bg-info "  >
                         <div class=" col-md-3 col-lg-2    h-75 bg-white ms-3   mt-5 rounded-3 border"  >
@@ -79,7 +79,7 @@
                                         
                                         <div class="carousel-item  active h-100  ">
                                               <img class="w-100 h-100" src="{% static 'images/E-Lightblack.png' %}"  alt="Image">
-                                              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center w-100">
+                                              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center w-100" style="width: 100%; left: 0; right: 0; bottom: 0; top: 0; position: absolute;">
                                               <div class="w-100 " style="width: 100%;">
                                                     <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a>
                                                     <!-- <a href="#meals" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a> -->
@@ -91,11 +91,9 @@
                                         {% for instance in data %}
                                         <div class="carousel-item h-100"  >
                                               <img class="w-100 h-100" src="{{ MEDIA_URL }}{{ instance.images.first.product_image }}" alt="Image">
-                                              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center w-100">
+                                              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center w-100" style="width: 100%; left: 0; right: 0; bottom: 0; top: 0; position: absolute;">
                                                 <div class="w-100 " style="width: 100%;">
-                                                    <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">Amazima Restaurant</h1> -->
-                                                    <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a> <!-- ADD MENU PDF-->
-                                                    <!-- <a href="#meals"  class="btn btn-light py-md-3 px-md-5 animated slideInRight">Order a Meal</a> -->
+                                                    <a href="{% url 'sell' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Sell Something</a> 
                                               </div>
                                               </div>
                                         </div>
@@ -133,11 +131,12 @@
     <!-- HERO End -->
     <div class="row" >
         <!--============== BREAK FAST============ -->
-  <div class="container mb-5">
+  <div class="container pb-4 pt-4 mb-5">
         <div class="container">
         {% if results %}
         <div class="row g-4 mt-2">
         <h2>Search Results for "{{ query }}"</h2>
+        <!-- ============================ SEARCH   RESULTS ============================  -->
               {% for instance in results %}
               <div id="products" class="col-lg-3 col-6 col-md-6 mb-5 wow fadeInUp  " data-wow-delay="0.1s">
                           
@@ -169,8 +168,9 @@
               {% endfor %}
         </div>
         {% else %}
-        <div class="row g-2 mb-5">
+        <div class="row g-2  mb-5">
               {% for instance in data %}
+               <!-- ============================ A L L   P R O D U C T S ============================  -->
               <div id="products" class="col-lg-3 col-md-3 col-6  wow fadeInUp  " data-wow-delay="0.1s">
 
                     <div id="" class="product_data col-12 room-item bg-white shadow rounded rounded-3 overflow-hidden">

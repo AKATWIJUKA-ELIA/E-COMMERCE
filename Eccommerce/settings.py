@@ -35,13 +35,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9mj8q%uv0&+pv%dcdb275#k_qa30#^5s1=em5)d$is%p(yp3b3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
                   'lightsuccess.pythonanywhere.com',
                   'e-light.onrender.com',
                   '127.0.0.1',
-                  '10.5.1.201'
+                  '10.5.1.41'
                   
                  ]
 
@@ -49,6 +49,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+        "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'Ecc',
+    'schema_viewer',
 ]
 
 # Set session expiration time in seconds (e.g., 1 week = 7 days * 24 hours * 60 minutes * 60 seconds)
@@ -67,6 +69,7 @@ SESSION_COOKIE_AGE = 7 * 24 * 60 * 60  # 1 week
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 MIDDLEWARE = [
+     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -202,3 +205,7 @@ STATICFILES_STORAGES = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Allow requests from your frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Next.js frontend
+]

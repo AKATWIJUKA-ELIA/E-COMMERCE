@@ -25,6 +25,7 @@ from django.http import HttpResponse
 import hashlib
 import hmac
 import subprocess
+from django.core.serializers import serialize
 
 
 
@@ -119,6 +120,7 @@ def index(request):
 def userpage(request):
 #       if request.user.is_authenticated:
             try:
+                #   data2 = serialize("json", Products.objects.prefetch_related('images').filter(Approved=True))  # Serialize QuerySet
                   data = Products.objects.prefetch_related('images').filter(Approved=True)
                   if request.user.is_authenticated:
                           items_on_cart =  Cart.objects.all().filter(cart_user_id=request.user.Customer_id).count()
@@ -137,6 +139,8 @@ def userpage(request):
                               'username':request.user.username[:5]
                               }
             # print(items_on_cart)
+        #     print(JsonResponse(data2, safe=False))
+        #     return data2
             return  render(request, 'userpage.html',context=context)
 #       else:
 #             return render(request,'userpage.html')
