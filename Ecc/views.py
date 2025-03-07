@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import timedelta, timezone
 from django.utils.timezone import now
 from django.shortcuts import render, redirect,get_object_or_404
-from Ecc.models import News_letter, Customers,Products,Orders,Cart,Gallery,Upload_Images
+from Ecc.models import News_letter, Customers,Products,Orders,Cart,Gallery,Upload_Images,Categories
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
@@ -26,6 +26,7 @@ import hashlib
 import hmac
 import subprocess
 from django.core.serializers import serialize
+
 
 
 
@@ -932,6 +933,7 @@ def Sell(request):
             name = request.user.username
             customer = Customers.objects.get(username=name)
             email = customer.email
+            categories = Categories.objects.all()
             if request.method == "POST":
                         product_Name = request.POST['product_name']
                         product_data={"product_name":request.POST['name'],
@@ -959,7 +961,7 @@ def Sell(request):
       else:
               return redirect('sign_in')
                 
-      return render(request, 'sell.html',{"username":request.user.username[:5]})
+      return render(request, 'sell.html',{"username":request.user.username[:5],"categories":categories})
 
 def create_product_with_images(product_data, image_files):
         # Start a transaction
@@ -1027,3 +1029,14 @@ def footer(request):
         current_year = now()
         print(current_year)
         return render(request, 'footer.html',{"current_year":current_year})
+def Add_Category(request):
+        if request.method == 'POST':
+                category_name = request.POST['category_name']
+                if Categories.objects.filter(category_name=category_name).exists():
+                        messages.error(request, "Category already exists! choose another name")
+                        return redirect(request.META.get('HTTP_REFERER', '/'))
+                else:
+                        category_items = Categories.objects.create(category_name=category_name)
+                        category_items.save()
+                        messages.success(request, "Category has been added Successfully")
+                        return redirect(request.META.get('HTTP_REFERER', '/'))

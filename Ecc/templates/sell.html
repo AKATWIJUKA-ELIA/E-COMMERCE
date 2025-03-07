@@ -37,16 +37,30 @@
 
         <div class="row">
                 <div class="col text-center wow fadeInUp" data-wow-delay="0.1s">
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert" style="text-align: center; background-color: rgb(171, 188, 188);">
-                        <strong>Info</strong> {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+        {% if message.tags == 'error' %}
+         alert-danger 
+            {% else %} alert-{{ message.tags }} 
+            {% endif %}
+             alert-dismissible fade show" role="alert" 
+            style="text-align: center;">
+            <strong>
+                {% if message.tags == "success" %}
+                    Success!
+                {% elif message.tags == "error" %}
+                    Error!
+                {% elif message.tags == "warning" %}
+                    Warning!
+                {% else %}
+                    Info!
+                {% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
                    
                 </div>
             </div>
@@ -78,15 +92,9 @@
                                                                         <div class="form-floating d-flex" style="margin-bottom:10px">
                                                                                 <select name="cartegory" id="cartegory" class="form-control form-select" required>
                                                                                 <option value="" disabled selected>Select cartegory</option>
-                                                                                <option value="vehicles">Vehicles</option>
-                                                                                <option value="electronics">Electronics</option>
-                                                                                <option value="fashion">Fashion</option>
-                                                                                <option value="properties">Properties</option>
-                                                                                <option value="health">Health</option>
-                                                                                <option value="art-and-crafts">Art and Crafts</option>
-                                                                                <option value="accessories">Accessories</option>
-                                                                                <option value="furniture">Furniture</option>
-                                                                                <option value="services">Services</option>
+                                                                                {% for category in categories %}
+                                                                                <option value="vehicles">{{category.category_name}}</option>
+                                                                                {% endfor %}
                                                                                 </select>
                                                                                 <label for="cartegory">Cartegory</label>
                                                                         </div>
@@ -147,6 +155,16 @@
             alert(`You can only upload up to ${maxFiles} images.`);
             this.value = ''; // Clear the selected files
         }
+    });
+
+         document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            let alerts = document.querySelectorAll(".alert");
+            alerts.forEach(alert => {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5000ms = 5 seconds
     });
 </script>
 </body>
