@@ -32,9 +32,9 @@
         <!-- HERO Start -->
         <div class="container-fluid  bg-secondary" style="height: 600px;" >
 
-                <div class="row h-100 bg-info "  >
-                        <div class=" col-md-3 col-lg-2    h-75 bg-white ms-3   mt-5 rounded-3 border"  >
-                                <h1 class="text-dark fs-4 " >Cartegories</h1>
+                <div class="row h-100 bg-white"  >
+                        <div class=" col-md-3 col-lg-2    h-75 bg-white mx-auto  d-md-none   mt-5 rounded-3 border"  >
+                                <h1 class="text-dark fs-4 " >Categories</h1>
                                 <form method="get" action="{% url 'search' %}" class=" row  md-col " >
                                  <button type="submit" name="q" value="Vehicle" class=" text-dark  col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
                                 Vehicles
@@ -62,8 +62,8 @@
                                Accessories
                                 </button>
         
-                                 <button type="submit" name="q" value="Furnitue" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
-                               Furnitue
+                                 <button type="submit" name="q" value="Furniture" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
+                               Furniture
                                 </button>
         
                                 <button type="submit" name="q" value="Services" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
@@ -158,7 +158,7 @@
 
                                 <div class="d-flex flex-column justify-content-between">
                                           <p class="text-body text-truncate"> {{ instance.product_description|truncatechars:25 }}</p>
-                                           <p class=" px-4 text-truncate" > Ushs: {{ instance.product_price }} </p>
+                                           <p class=" px-4 text-truncate" > Ughs: {{ instance.product_price }} </p>
                                 </div> 
                           </div>
 
@@ -191,7 +191,7 @@
 
                                 <div class="d-flex flex-column justify-content-between">
                                           <p class="text-body text-truncate text-md-truncate"> {{ instance.product_description|truncatechars:30 }}</p>
-                                           <p class="px-4 px-md-0 text-truncate" > Ushs: {{ instance.product_price }} </p>
+                                           <p class="px-4 px-md-0 text-truncate" > Ughs: {{ instance.product_price }} </p>
                                 </div> 
                           </div>
 
