@@ -150,3 +150,7 @@ class Payments(models.Model):
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
     title = models.CharField(max_length=255)
+
+class Categories(models.Model):
+        category_id = models.AutoField(primary_key=True)
+        category_name = models.CharField(max_length=255)

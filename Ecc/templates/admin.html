@@ -60,7 +60,30 @@
                 </div>
             </div>
         </div>
-
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+        {% if message.tags == 'error' %}
+         alert-danger 
+            {% else %} alert-{{ message.tags }} 
+            {% endif %}
+             alert-dismissible fade show" role="alert" 
+            style="text-align: center;">
+            <strong>
+                {% if message.tags == "success" %}
+                    Success!
+                {% elif message.tags == "error" %}
+                    Error!
+                {% elif message.tags == "warning" %}
+                    Warning!
+                {% else %}
+                    Info!
+                {% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
     <!-- Sidebar -->
     <div class="sidebar">
       
@@ -71,7 +94,7 @@
             <a href="#order" id="orders_click" class="nav-link"><i class="fas fa-shopping-cart me-2"></i> Order</a>
             <a href="#AddProductModal" data-bs-toggle="modal" class="nav-link"><i class="fas fa-box me-2"></i> add Product</a>
             <a href="#AddGalleryModal" data-bs-toggle="modal" class="nav-link"><i class="fas fa-box me-2"></i> add Gallery</a>
-            <a href="#" class="nav-link"><i class="fas fa-box me-2"></i> Customers</a>
+            <a href="#AddCategories" data-bs-toggle="modal" class="nav-link"><i class="fas fa-box me-2"></i> Categories</a>
             <a href="#" class="nav-link"><i class="fa-solid fa-comment"></i> FeedBack</a>
             <a href="{% url 'log_out' %}" class="nav-link"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
         </nav>
@@ -454,6 +477,61 @@
             </div>
       </div>
 
+            <!-- ===================== A D D I N G    C A T E G O R I E S  ========================-->
+
+      <div class="modal fade bd-example-modal-lg" id="AddCategories" tabindex="-1" aria-labelledby="bd-example-modal-lg" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> ADD CATEGORIES </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                              <div class="row">
+                                    <div class="col-lg-8 col-11 mx-auto">
+                                          <section class="sign-in-form section-padding">
+                                                <div class="container">
+                                                    <div class="row">
+                                    
+                                                        <div class="col-lg-8 mx-auto col-12">
+                                    
+                                                            <div class="row">
+                                                                <div class="col-lg-11 offset-0 flex">
+                                                                    <form role="form" method="POST" action="{% url 'Add_Category' %}" enctype="multipart/form-data">
+                                                                          {% csrf_token %}
+                                    
+                                                                          <div class="form-floating" style='margin-bottom:10px;'>
+                                                                                <input type="text" name="category_name" id="title"  class="form-control " placeholder="title" required>
+                                    
+                                                                                <label for="title">title</label>
+                                                                          </div>                                    
+                                                                        
+                                    
+                                                                        <button type="submit" class="btn btn-dark custom-btn form-control mt-4 mb-3">
+                                                                            Add Categories
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                    
+                                                            
+                                                            
+                                                        </div>
+                                    
+                                                        
+                                                </div>
+                                            </section>
+
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+
        
 
       
@@ -599,7 +677,15 @@
                   }
       });
 
-
+        document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            let alerts = document.querySelectorAll(".alert");
+            alerts.forEach(alert => {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5000ms = 5 seconds
+    });
 
   </script>
 </body>

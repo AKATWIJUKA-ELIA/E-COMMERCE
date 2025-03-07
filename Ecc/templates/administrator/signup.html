@@ -58,18 +58,30 @@
     <body>
       
       {% include "navv.html" %}
-      {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{message.tags }} alert-dismissible fade show" role ="alert" style= "text-align : center;background-color: aqua;">
-          <strong>
-            Message:
-          </strong> {{ message }}
-          <button type ="button" class="close" data-dismiss="alert" aria-label="close">
-          <span  aria-hidden="true"> &times;</span>
-          </button>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+        {% if message.tags == 'error' %}
+         alert-danger 
+            {% else %} alert-{{ message.tags }} 
+            {% endif %}
+             alert-dismissible fade show" role="alert" 
+            style="text-align: center;">
+            <strong>
+                {% if message.tags == "success" %}
+                    Success!
+                {% elif message.tags == "error" %}
+                    Error!
+                {% elif message.tags == "warning" %}
+                    Warning!
+                {% else %}
+                    Info!
+                {% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-      {% endfor %}
-    {% endif %}
+    {% endfor %}
+{% endif %}
         <section class="preloader">
             <div class="spinner">
                 <span class="sk-inner-circle"></span>
@@ -171,6 +183,17 @@
         <script src="{% static "js-sign/jQuery.headroom.js" %} "></script>
         <script src="{% static "js-sign/slick.min.js" %} "></script>
         <script src="{% static "js-sign/custom.js" %} "></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            let alerts = document.querySelectorAll(".alert");
+            alerts.forEach(alert => {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5000ms = 5 seconds
+    });
+        </script>
 
     </body>
 </html>

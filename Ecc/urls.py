@@ -39,7 +39,8 @@ urlpatterns =[
     path('sell/', views.Sell,name='sell'),
     path('search/', views.search_view, name='search'),
     path("footer/",views.footer,name="footer"),
-    path("approve/",views.approve,name='approve')
+    path("approve/",views.approve,name='approve'),
+    path("category-add/",views.Add_Category,name='Add_Category'),
 
 ]
 if settings.DEBUG:
