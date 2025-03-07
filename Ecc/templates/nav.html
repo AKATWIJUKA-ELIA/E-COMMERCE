@@ -1,178 +1,108 @@
 {% load static %}
 <head>
     <meta charset="utf-8">
-    <title> E-Light</title>
+    <title>E-Light</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="golden">
-    <meta content="" name="hotel">
 
     <!-- Favicon -->
     <link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="32x32">
-<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="96x96">
-<link rel="icon" href="{% static 'images/fav4.png' %}" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="{% static 'images/fav4.png' %}">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
-
-    <!-- Icon Font Stylesheet -->
+    
+    <!-- Stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href=" {% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href=" {% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css'%}" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href=" {% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
-
-       <!-- Header Start -->
-        {% if user.is_authenticated %}
-       <div class="container-fluid bg-dark px-0">
-            <div class="row gx-0 ">
-                <div class="col-lg-9">
-      
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                                <div style="margin-top: 0%;" class="col-2">
-                                        <a href="{% url 'userpage' %}">   <img src="{% static 'images/E-Light.png' %}" alt=" logo"height="100px" width="300px"style="border-radius: 20px;"><a/>
-                
-                                </div> 
-      
-                        <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
-                          <h1
-                        style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary "> </h1>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-      
-                        <div style="margin-left: 10%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-      
-                              <div style="margin-top: 0%;" class="col-10 px-5 d-flex align-items-center">
-                              <input type="text"  name="search" id="search"  class="form-control flex rounded-3 me-3 "  placeholder="Search products, brands and categories" >
-                 
-                              </div> 
-      
-                              <div class="navbar-nav mr-auto py-0">
-                              <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
-                              <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                              <a id="user-welcome" href="{% url 'profile' %}" class="nav-item nav-link text-truncate" style="cursor: pointer;" >Hi-{{ username }}</a>
-                              </div>
-                          <ul class="navbar-nav mb-lg-0">
-                          <li class="nav-item px-1">
-                              <a href="{% url 'cart' %}" class="btn btn-sm btn-light rounded py-2 px-2">Cart({{ items_on_cart }})</a>
-                            </li>
-                            <li class="nav-item px-1">
-                              <a href="{% url 'log_out' %}" class="btn btn-sm btn-light rounded py-2 px-2">LogOut</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                </div>
-            </div>
+<div class="container-fluid bg-dark shadow-sm">
+    <div class="row align-items-center p-3">
+        <div class="col-lg-2 text-center">
+            <!-- Logo -->
+            <a href="{% url 'userpage' %}" class="navbar-brand">
+                <img src="{% static 'images/E-Light.png' %}" alt="logo" height="50">
+            </a>
         </div>
-        {% else %}
-        <div class="container-fluid bg-dark px-0">
-            <div class="row gx-0 ">
 
-                <div class="col-lg-9">
+        <div class="col-lg-6">
+            <!-- Search Bar -->
+             <div style="margin-top: 0%;" class="col-10 px-5 d-flex align-items-center">
+                              <input type="text"  name="search" id="search"  class="form-control flex rounded-3 me-3 "  placeholder="Search products, brands and categories" >
+                 </div> 
+        </div>
 
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
+        <div class="col-lg-4 text-end">
+                <a href="{% url 'userpage' %}" class="me-3"> Home</a>
+            <!-- User & Cart -->
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="me-3"><i class="fas fa-user"></i></i> Hi, {{ username }}</a>
+                <a href="{% url 'log_out' %}" class=" text-white btn btn-outline-dark btn-sm">Logout</a>
+            {% else %}
+                <a href="{% url 'sign_in' %}" class="me-3"><i class="fas fa-user"></i> Sign in / Register</a>
+            {% endif %}
 
-                        <div style="margin-top: 0%;" class="col-2">
-                                <a href="{% url 'userpage' %}">   <img src="{% static 'images/E-Light.png' %}" alt=" logo" style="border-radius: 20px;"><a/>
+            <a href="{% url 'cart' %}" class="ms-3 position-relative">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">{{ items_on_cart }}</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="row bg-light">
+        <div class="col-12 text-center py-2">
+            <div class="dropdown d-inline-block">
+                <a href="#" class="mx-3 text-dark dropdown-toggle" id="weeklyDealsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    All Categories
+                </a>
         
-                        </div> 
+                <form method="get" action="{% url 'search' %}" class="dropdown-menu row  md-col rounded-3 " aria-labelledby="weeklyDealsDropdown" >
+                        <button type="submit" name="q" value="Vehicle" class=" text-dark  col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
+                       Vehicles
+                       </button>
+                       <button type="submit" name="q" value="Electronic" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12   px-o border border-2" style="height: 40px;">
+                       Electronics
+                       </button>
+                       <button type="submit" name="q" value="Fashion" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
+                       Fashion
+                       </button>
+                      
+                      <button type="submit" name="q" value="Properties" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
+                       Properties
+                       </button>
 
-                        
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
+                        <button type="submit" name="q" value="Health" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
+                       Health
+                       </button>
 
-                        <div style="margin-left: 20%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
+                        <button type="submit" name="q" value="Art and Crafts" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2 text-truncate" style="height: 40px;">
+                       Art and Crafts
+                       </button>
 
-                              <div style="margin-top: 0%;" class="col-10 px-5 d-flex align-items-center">
-                              <input type="text"  name="search" id="search"  class="form-control flex rounded-3 me-3 "  placeholder="Search products, brands and categories" >
-                              <button type="button" class="btn btn-primary" aria-label="Reset">Search</button>
-                              </div> 
+                         <button type="submit" name="q" value="Accessories" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
+                      Accessories
+                       </button>
 
-                              <div class="navbar-nav mr-auto py-0">
-                              <a href="{% url 'userpage' %}" class="nav-item nav-link" onclick="home">Home</a>
-                              {% comment %} <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
-                              <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a> {% endcomment %}
-                              <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                              {% comment %} <a id="contact" href="" class="nav-item nav-link" onclick="contact">Sign Up</a> {% endcomment %}
-                              </div>
-                          <ul class="navbar-nav mb-lg-0">
-                            <li class="nav-item">
-                              <a href="{% url 'sign_in' %}" class="btn btn-sm btn-light rounded py-2 px-4">LogIn</a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-light rounded py-2 px-4">SignUp</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                </div>
+                        <button type="submit" name="q" value="Furniture" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
+                      Furniture
+                       </button>
+
+                       <button type="submit" name="q" value="Services" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
+                      Services
+                       </button>
+                       </form>
             </div>
+            
+            
+            <a href="#" class="mx-3 text-dark">Top Brands</a>
+            <a href="#" class="mx-3 text-dark">Consumer Electronics</a>
+            <a href="#" class="mx-3 text-dark">Home Improvement</a>
+            <a href="#" class="mx-3 text-dark">Top Brands</a>
+            <a href="#" class="mx-3 text-dark">Consumer Electronics</a>
+            <a href="#" class="mx-3 text-dark">Home Improvement</a>
+            <a href="#" class="mx-3 text-dark">Top Brands</a>
+            <a href="#" class="mx-3 text-dark">Consumer Electronics</a>
         </div>
-        {% endif %}
-        <!-- Header End -->
-            <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
-    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
-    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
-    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
-    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    </div>
+</div>
 
-
-    <script src="{% static 'js/main.js' %}"></script>
-
-
-    <!-- <body>
-      <div class="container-fluid bg-dark px-0">
-        <div class="row gx-0 ">
-          <div class="col-lg-9">
-            <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-              <a href="{% url 'userpage' %}" class="navbar-brand d-block d-lg-none">
-                <h1   
-     style="font-family: 'Times New Roman', Times, serif;" class="m-0 text-primary text-uppercase">Amazima Restaurant</h1>
-              </a>
-              <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div style="margin-left: 37%;" class="collapse navbar-collapse justify-content-between bg-transparent" id="navbarCollapse">
-                <div class="navbar-nav mr-auto py-0">
-                  <a href="{% url 'userpage' %}" class="nav-item nav-link current" onclick="home">Home</a>
-                  <a id="about" href="{% url 'about' %}" class="nav-item nav-link " onclick="about">About</a>
-                  <a id="services" href="{% url 'service' %}" class="nav-item nav-link" onclick="services">Services</a>
-                  <a id="contact" href="{% url 'contact' %}" class="nav-item nav-link" onclick="contact">Contact</a>
-                  <a id="contact" href="{% url 'sign_up' %}" class="nav-item nav-link" onclick="contact">Sign Up</a>
-                </div>
-                <ul class="navbar-nav mb-lg-0">
-                  <li class="nav-item">
-                    <a href="#" class="btn btn-sm btn-light rounded py-2 px-4">Cart</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="btn btn-sm btn-outline-light rounded py-2 px-4">Login</a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-      </body> -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
