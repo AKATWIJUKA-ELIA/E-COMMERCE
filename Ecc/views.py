@@ -1032,11 +1032,11 @@ def footer(request):
 def Add_Category(request):
         if request.method == 'POST':
                 category_name = request.POST['category_name']
-                if Categories.objects.filter(category_name=category_name).exists():
-                        messages.error(request, "Category already exists! choose another name")
-                        return redirect(request.META.get('HTTP_REFERER', '/'))
-                else:
-                        category_items = Categories.objects.create(category_name=category_name)
-                        category_items.save()
-                        messages.success(request, "Category has been added Successfully")
-                        return redirect(request.META.get('HTTP_REFERER', '/'))
+                
+                category_list = [c.strip() for c in category_name.split(",")]  # Split and clean spaces
+        
+                for category in category_list:
+                        if category:  # Avoid saving empty strings
+                                print(category)
+                                Categories.objects.get_or_create(category_name=category)
+        return redirect(request.META.get('HTTP_REFERER', '/'))

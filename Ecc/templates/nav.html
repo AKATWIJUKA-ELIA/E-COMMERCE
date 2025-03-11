@@ -30,7 +30,8 @@
         </div>
 
         <div class="col-lg-4 text-end">
-                <a href="{% url 'userpage' %}" class="me-3"> Home</a>
+        <a href="{% url 'userpage' %}" class="me-3"> Home</a>
+                <a href="{% url 'sell' %}" class="me-3"> Sell</a>
             <!-- User & Cart -->
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' %}" class="me-3"><i class="fas fa-user"></i></i> Hi, {{ username }}</a>
@@ -47,7 +48,7 @@
     </div>
 
     <!-- Navigation Links -->
-    <div class="row bg-light">
+    <div class="row bg-light d-none d-lg-block">
         <div class="col-12 text-center py-2">
             <div class="dropdown d-inline-block">
                 <a href="#" class="mx-3 text-dark dropdown-toggle" id="weeklyDealsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
