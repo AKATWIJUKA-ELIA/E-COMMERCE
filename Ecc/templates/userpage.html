@@ -47,39 +47,12 @@
                         <div class=" col-md-3 col-lg-2    h-75 bg-white mx-auto  d-md-none   mt-5 rounded-3 border"  >
                                 <h1 class="text-dark fs-4 " >Categories</h1>
                                 <form method="get" action="{% url 'search' %}" class=" row  md-col " >
-                                 <button type="submit" name="q" value="Vehicle" class=" text-dark  col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
-                                Vehicles
-                                </button>
-                                <button type="submit" name="q" value="Electronic" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12   px-o border border-2" style="height: 40px;">
-                                Electronics
-                                </button>
-                                <button type="submit" name="q" value="Fashion" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
-                                Fashion
-                                </button>
-                               
-                               <button type="submit" name="q" value="Properties" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
-                                Properties
-                                </button>
-        
-                                 <button type="submit" name="q" value="Health" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
-                                Health
-                                </button>
-        
-                                 <button type="submit" name="q" value="Art and Crafts" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2 text-truncate" style="height: 40px;">
-                                Art and Crafts
-                                </button>
-        
-                                  <button type="submit" name="q" value="Accessories" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
-                               Accessories
-                                </button>
-        
-                                 <button type="submit" name="q" value="Furniture" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
-                               Furniture
-                                </button>
-        
-                                <button type="submit" name="q" value="Services" class=" text-dark col-4 fw-light  fs-5 p-2 cartegory_item col-md-12 px-o border border-2" style="height: 40px;">
-                               Services
-                                </button>
+                                        {% for category in categories %}
+                                        <button type="submit" name="q" value="{{category.category_name}}" class=" text-dark  col-4 fw-light  fs-5 p-2 cartegory_item  col-md-12  px-o border border-2" style="height: 40px;">
+                                        {{category.category_name}}
+                                        </button>
+                                        {% endfor %}
+                                
                                 </form>
                                
                         </div>
@@ -145,9 +118,9 @@
   <div class="container pb-4 pt-4 mb-5">
         <div class="container">
         {% if results %}
-        <div class="row g-4 mt-2">
-        <h2>Search Results for "{{ query }}"</h2>
-        <!-- ============================ SEARCH   RESULTS ============================  -->
+        <div class="row g-2  mb-5">
+                <h2>Search Results for "{{ query }}"</h2>
+                <!-- ============================ SEARCH   RESULTS ============================  -->
               {% for instance in results %}
               <div id="products" class="col-lg-3 col-6 col-md-6 mb-5 wow fadeInUp  " data-wow-delay="0.1s">
                           
@@ -179,6 +152,10 @@
               {% endfor %}
         </div>
         {% else %}
+        <div>   
+        </div>
+        {% endif %}
+
         <div class="row g-2  mb-5">
               {% for instance in data %}
                <!-- ============================ A L L   P R O D U C T S ============================  -->
@@ -211,7 +188,7 @@
               </div>
               {% endfor %}
         </div>
-        {% endif %}
+    
         
         </div>
   </div>
