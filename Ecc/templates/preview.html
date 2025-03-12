@@ -52,72 +52,47 @@
                               </div>
                         </div>
 
-                        <div class="row  mb-3">
-                                <div class="col-8 rounded mt-2">
-                                                <div id="header-carousel" class="carousel slide bg-primary" data-bs-ride="carousel" style="height: 500px;">
-                                                        <div class="carousel-inner h-100 w-70">
-                                                        {% for image in All_Images %}
-                                                        <div class="carousel-item bg-primary  w-100 h-100 {% if forloop.first %}active{% endif %}">
-                                                                <img class="w-100 h-100 rounded" src="{{ image.product_image.url }}" alt="Image"  >
-                                                                
-                                                        </div>
-                                                        {% endfor %}
-                                                        </div>
-                                                
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Next</span>
-                                                        </button>
-                                                </div>
-        
-                                                <!-- Small Images -->
-                                                <div class="image-gallery d-flex justify-content-center gap-2 mt-1 mb-5">
-                                                        {% for image in All_Images %}
-                                                        <div class="small-image">
-                                                        <img class="img-fluid" src="{{ image.product_image.url }}" alt="{{ product.product_name }}" style="width: 100px; height: 50px; object-fit: cover;">
-                                                        </div>
-                                                        {% endfor %}
-                                                </div>
-                                </div>
-        
-                                <div class=" col-4 h-75 p-2 mt-2 bg-light border border-3 rounded">
-                                        <div class="d-flex flex-column justify-content-between gap-2 mb-3">
-                                                <h5 class="mb-0 text-start ">{{product.product_name}}</h5>
-                                                <div class="ps-2">
-                                                        <h6 class="text-truncate">
-                                                        Price : Ushs {{ product.product_price }} 
-                                                        </h6>
-                                                        <p class="text-body mb-3">{{product.product_description}}</p>
-                                                </div>
-                                                <div class="ps-2">
-                                                        <h6 class="text-truncate">
-                                                        Seller's Contact: <a href='tel:{{ product.product_owner.phone_number }}' style="text-decoration: none; color: inherit;">{{ product.product_owner.phone_number }} </a>
-                                                        </h6>
-                                                </div>
-                                                <div class="ps-2">
-                                                        <h6 class="text-truncate">
-                                                        Seller's Email  :  <i class="fa fa-envelope me-3" > </i> <a href="mailto: {{ product.product_owner.email }}">{{ product.product_owner.email }}</a>
-                                                        </h6>
-                                                </div>
+                        <div class="row mb-5">
+                                <div class="col-lg-8 col-md-12">
+                                    <div id="header-carousel" class="carousel slide bg-primary" data-bs-ride="carousel" style="height: 500px;">
+                                        <div class="carousel-inner h-100 w-100">
+                                            {% for image in All_Images %}
+                                            <div class="carousel-item bg-primary w-100 h-100 {% if forloop.first %}active{% endif %}">
+                                                <img class="w-100 h-100 rounded img-fluid" src="{{ image.product_image.url }}" alt="Image">
+                                            </div>
+                                            {% endfor %}
                                         </div>
-                        
-                                        <div class="d-flex justify-content-center">
-                                                
-                                                <button style="height: 40px" type="button" class="add-cart  btn btn-sm btn-dark rounded py-2 px-4 text-truncate" data-product-id="{{ product.pk }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
-                                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
-                                                        </svg>
-                                                        Add to Cart
-                                                </button>
-                                                
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon"></span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon"></span>
+                                        </button>
+                                    </div>
+                            
+                                    <div class="image-gallery d-flex justify-content-center gap-2 mt-1 mb-5">
+                                        {% for image in All_Images %}
+                                        <div class="small-image">
+                                            <img class="img-fluid" src="{{ image.product_image.url }}" alt="{{ product.product_name }}">
                                         </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                        </div>
+                            
+                                <div class="col-lg-4 col-md-12 p-2 mt-2  bg-light border border-3 rounded ">
+                                    <h5 class="text-start">{{ product.product_name }}</h5>
+                                    <h6>Price: Ushs {{ product.product_price }}</h6>
+                                    <p class="text-body">{{ product.product_description }}</p>
+                                    <h6>Seller's Contact: <a href="tel:{{ product.product_owner.phone_number }}">{{ product.product_owner.phone_number }}</a></h6>
+                                    <h6>Seller's Email: <a href="mailto:{{ product.product_owner.email }}">{{ product.product_owner.email }}</a></h6>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="add-cart btn btn-sm btn-dark rounded w-100">
+                                            <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             
                         <br/>
                 </div>
